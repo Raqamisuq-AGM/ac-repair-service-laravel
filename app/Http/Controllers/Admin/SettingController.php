@@ -61,8 +61,8 @@ class SettingController extends Controller
     {
         Artisan::call('optimize:clear');
 
-        //return success message with tostr
-        session()->flash('toast_success', 'All caches cleared successfully');
+        //return success message
+        toastr()->success('Cache cleared successfully');
         return redirect()->back();
     }
 }

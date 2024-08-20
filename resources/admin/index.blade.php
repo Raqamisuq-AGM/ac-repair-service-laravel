@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body pb-3">
                         <span class="d-block fw-medium mb-1">Total Traffic</span>
-                        <h3 class="card-title mb-1">276k</h3>
+                        <h3 class="card-title mb-1">{{ $trafficCount }}</h3>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body pb-3">
                         <span class="d-block fw-medium mb-1">Unread mails</span>
-                        <h3 class="card-title mb-1">276k</h3>
+                        <h3 class="card-title mb-1">{{ $unreadMailCount }}</h3>
                     </div>
                 </div>
             </div>
@@ -42,19 +42,27 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td>
-                                        123.56.25.98
-                                    </td>
-                                    <td>Windows</td>
-                                    <td>WebKit</td>
-                                    <td>Chrome</td>
-                                    <td>Dhaka</td>
-                                    <td>Bangladesh</td>
-                                    <td>BD</td>
-                                    <td>1212</td>
-                                    <td>24-08-19 08:09 PM</td>
-                                </tr>
+                                @if ($traffics->isNotEmpty())
+                                    @foreach ($traffics as $traffic)
+                                        <tr>
+                                            <td>{{ $traffic->ip }}</td>
+                                            <td>{{ $traffic->platform }}</td>
+                                            <td>{{ $traffic->device }}</td>
+                                            <td>{{ $traffic->browser }}</td>
+                                            <td>{{ $traffic->city }}</td>
+                                            <td>{{ $traffic->country }}</td>
+                                            <td>{{ $traffic->country_code }}</td>
+                                            <td>{{ $traffic->zip_code }}</td>
+                                            <td>24-08-19 08:09 PM</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="9" class="text-center">
+                                            No data available
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -75,15 +83,27 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td>test@example.com</td>
-                                    <td>test subject</td>
-                                    <td>0168544269</td>
-                                    <td>
-                                        <span class="badge bg-label-waring me-1"
-                                            style="ckground-color: #fff2d6 !important;color: #ffab00 !important;">Unread</span>
-                                    </td>
-                                </tr>
+                                @if ($unreadMails->isNotEmpty())
+                                    @foreach ($unreadMails as $unreadMail)
+                                        <tr>
+                                            <td>{{ $unreadMail->email }}</td>
+                                            <td>{{ $unreadMail->subject }}</td>
+                                            <td>{{ $unreadMail->phone }}</td>
+                                            <td>
+                                                <span class="badge bg-label-waring me-1"
+                                                    style="ckground-color: #fff2d6 !important;color: #ffab00 !important;">
+                                                    {{ $unreadMail->status }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            No data available
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
