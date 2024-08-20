@@ -7,6 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
         @yield('title')
@@ -45,13 +46,13 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('/backend/admin/assets/js/config.js') }}"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-
     <style>
         #template-customizer {
             display: none !important;
         }
     </style>
+
+    @livewireStyles
 
     @yield('style')
 </head>
@@ -108,17 +109,10 @@
     <script src="{{ asset('/backend/admin/assets/js/main.js') }}"></script>
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('/backend/admin/assets/js/dashboards-analytics.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <!-- END: Page JS-->
-
-    <script>
-        @if (Session::has('toast_success'))
-            toastr.success("{{ Session::get('toast_success') }}");
-        @endif
-    </script>
-
+    @livewireScripts
     @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>

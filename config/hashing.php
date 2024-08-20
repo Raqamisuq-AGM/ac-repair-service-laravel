@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('HASH_DRIVER', 'bcrypt'),
+    'driver' => 'bcrypt',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,8 +29,7 @@ return [
     */
 
     'bcrypt' => [
-        'rounds' => env('BCRYPT_ROUNDS', 12),
-        'verify' => env('HASH_VERIFY', true),
+        'rounds' => env('BCRYPT_ROUNDS', 10),
     ],
 
     /*
@@ -45,23 +44,9 @@ return [
     */
 
     'argon' => [
-        'memory' => env('ARGON_MEMORY', 65536),
-        'threads' => env('ARGON_THREADS', 1),
-        'time' => env('ARGON_TIME', 4),
-        'verify' => env('HASH_VERIFY', true),
+        'memory' => 65536,
+        'threads' => 1,
+        'time' => 4,
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Rehash On Login
-    |--------------------------------------------------------------------------
-    |
-    | Setting this option to true will tell Laravel to automatically rehash
-    | the user's password during login if the configured work factor for
-    | the algorithm has changed, allowing graceful upgrades of hashes.
-    |
-    */
-
-    'rehash_on_login' => true,
 
 ];

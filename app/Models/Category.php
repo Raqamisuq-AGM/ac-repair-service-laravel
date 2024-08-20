@@ -13,4 +13,9 @@ class Category extends Model
         'category',
         'status'
     ];
+
+    public function subCategory()
+    {
+        return $this->hasMany(SubCategory::class);
+    }
 }
