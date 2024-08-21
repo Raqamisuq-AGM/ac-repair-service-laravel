@@ -17,4 +17,16 @@ class ContactUsMail extends Model
         'message',
         'status'
     ];
+
+    // Accessor for status
+    public function getStatusAttribute($value)
+    {
+        $status = [
+            0 => 'unread',
+            1 => 'read',
+            2 => 'deleted',
+        ];
+
+        return $status[$value];
+    }
 }

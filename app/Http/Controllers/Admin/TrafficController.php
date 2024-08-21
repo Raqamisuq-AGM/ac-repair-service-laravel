@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserTraffic;
 use Illuminate\Http\Request;
 
 class TrafficController extends Controller
@@ -10,6 +11,7 @@ class TrafficController extends Controller
     //contact us mail method
     public function all()
     {
-        return view('pages.traffic.index');
+        $items = UserTraffic::latest()->paginate(15);
+        return view('pages.traffic.index', compact('items'));
     }
 }

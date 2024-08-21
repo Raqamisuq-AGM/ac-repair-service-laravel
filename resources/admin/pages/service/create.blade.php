@@ -1,12 +1,10 @@
 @extends('partials.layout')
 
-@section('title')
-    {{ 'Create Services' }}
-@endsection
+@section('title', 'Create Services')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <form action="#">
+        <form action="{{ route('service.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="d-flex justify-content-between align-items-center">
                 <h3>Create Service</h3>
@@ -20,44 +18,32 @@
                             <h3>Basic</h3>
                             <div class="form-group">
                                 <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title" value="{{ old('title') }}"
-                                    placeholder="John Doe" />
+                                <input type="text" class="form-control" id="title" name="title"
+                                    value="{{ old('title') }}" placeholder="Enter Service Title" />
+                                @error('title')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
-                                <label for="category" class="form-label">Category</label>
-                                <select id="category" class="form-select form-select-lg" value="{{ old('category') }}">
-                                    <option>Select Category</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="subCategory" class="form-label">Sub Category</label>
-                                <select id="subCategory" class="form-select form-select-lg"
-                                    value="{{ old('sub_category') }}">
-                                    <option>Select Sub Category</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="thumb" class="form-label">Thumbnail</label>
-                                <input class="form-control" type="file" id="thumb" />
+                                <label for="cover_photo" class="form-label">Thumbnail</label>
+                                <input class="form-control" type="file" id="cover_photo" name="cover_photo" />
+                                @error('cover_photo')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
                                 <label for="shortDesc" class="form-label">Short Description</label>
-                                <textarea name="" id="shortDesc" cols="30" rows="10" class="form-control">{{ old('short_desc') }}</textarea>
+                                <textarea id="shortDesc" name="short_desc" cols="30" rows="10" class="form-control">{{ old('short_desc') }}</textarea>
+                                @error('short_desc')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
                                 <label for="desc" class="form-label">Description</label>
                                 <textarea id="desc" name="desc">{{ old('desc') }}</textarea>
-                                {{-- @error('desc')
-                                <div class="form-text text-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror --}}
+                                @error('desc')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -71,30 +57,41 @@
                             <h3>SEO Section</h3>
                             <div class="form-group">
                                 <label for="meta_title" class="form-label">Meta Title</label>
-                                <input type="text" class="form-control" id="meta_title" value="{{ old('meta_title') }}"
-                                    placeholder="John Doe" />
+                                <input type="text" class="form-control" id="meta_title" name="meta_title"
+                                    value="{{ old('meta_title') }}" placeholder="Enter Meta Title" />
+                                @error('meta_title')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mt-3">
                                 <label for="meta_author" class="form-label">Meta Author</label>
-                                <input type="text" class="form-control" id="meta_author" value="{{ old('meta_author') }}"
-                                    placeholder="John Doe" />
+                                <input type="text" class="form-control" id="meta_author" name="meta_author"
+                                    value="{{ old('meta_author') }}" placeholder="Enter Meta Author" />
+                                @error('meta_author')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
-                                <label for="meta_og_thumb" class="form-label">OG:Thambnail</label>
-                                <input class="form-control" type="file" id="meta_og_thumb" />
+                                <label for="meta_og_thumb" class="form-label">OG Thumbnail</label>
+                                <input class="form-control" type="file" id="meta_og_thumb" name="meta_og_thumb" />
+                                @error('meta_og_thumb')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
-                                <label for="TagifyBasic" class="form-label">Keywords</label>
-                                <input class="form-control" type="file" id="TagifyBasic" />
+                                <label for="TagifyBasic" class="form-label">Meta Keywords</label>
+                                <input class="form-control" type="text" id="TagifyBasic" name="meta_tags"
+                                    value="{{ old('meta_tags') }}" />
+                                @error('meta_tags')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
-                                <label for="meta_tags" class="form-label">Meta Description</label>
-                                <textarea name="" id="meta_tags" cols="30" rows="10" class="form-control">{{ old('meta_tags') }}</textarea>
-                                {{-- @error('desc')
-                                <div class="form-text text-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror --}}
+                                <label for="meta_desc" class="form-label">Meta Description</label>
+                                <textarea id="meta_desc" name="meta_desc" cols="30" rows="10" class="form-control">{{ old('meta_desc') }}</textarea>
+                                @error('meta_desc')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mx-4 mb-4">Submit</button>

@@ -27,7 +27,7 @@ class BlogSeeder extends Seeder
         $categories = Category::all();
         $subCategories = SubCategory::all();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             // Generate a fake image
             $imageName = $faker->image($uploadPath, 800, 600, null, false);
 

@@ -3,21 +3,44 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomCode;
+use App\Models\SystemImage;
+use App\Models\SystemShortInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Image;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
     //custom code method
     public function customCode()
     {
-        return view('pages.settings.custom-code');
+        $item = CustomCode::find(1);
+        if ($item == null) {
+            toastr()->warning('Item not found');
+            return redirect()->back();
+        }
+        return view('pages.settings.custom-code', compact('item'));
     }
 
     //custom code update method
-    public function customCodeUpdate()
+    public function customCodeUpdate(Request $request)
     {
-        return view('pages.settings.custom-code');
+        $item = CustomCode::find(1);
+        if ($item == null) {
+            toastr()->warning('Item not found');
+            return redirect()->back();
+        }
+
+        $item->header = $request->input('header');
+        $item->footer = $request->input('footer');
+        $item->save();
+
+        // return success message with toaster
+        toastr()->success('Custom code updated successfully');
+        return redirect()->back();
     }
 
     //change email method
@@ -27,9 +50,28 @@ class SettingController extends Controller
     }
 
     //change email update method
-    public function changeEmailUpdate()
+    public function changeEmailUpdate(Request $request)
     {
-        return view('pages.settings.change-email');
+        $request->validate([
+            'old_email' => [
+                'required',
+                'email',
+                function ($attribute, $value, $fail) {
+                    if (!Auth::user()->where('email', $value)->exists()) {
+                        $fail('The old email does not match our records.');
+                    }
+                },
+            ],
+            'new_email' => 'required|email|unique:users,email,' . Auth::id(),
+            'confirm_email' => 'required|email|same:new_email',
+        ]);
+
+        $user = Auth::user();
+        $user->email = $request->input('new_email');
+        $user->save();
+        // return success message with toaster
+        toastr()->success('Email updated successfully');
+        return redirect()->back();
     }
 
     //change password method
@@ -39,21 +81,101 @@ class SettingController extends Controller
     }
 
     //change password update method
-    public function changePasswordUpdate()
+    public function changePasswordUpdate(Request $request)
     {
-        return view('pages.settings.change-password');
+
+        $request->validate([
+            'old_password' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
+                        $fail('The old password does not match our records.');
+                    }
+                },
+            ],
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+        $user = Auth::user();
+        $user->password = Hash::make($request->input('new_password'));
+        $user->save();
+        // return success message with toaster
+        toastr()->success('Email updated successfully');
+        return redirect()->back();
     }
 
     //company method
     public function company()
     {
-        return view('pages.settings.company');
+        $company = SystemShortInfo::find(1);
+        $systemLogo = SystemImage::where('type', 'logo')->first();
+        $systemFavicon = SystemImage::where('type', 'favicon')->first();
+        if ($company == null) {
+            toastr()->warning('Item not found');
+            return redirect()->back();
+        }
+        return view('pages.settings.company', compact('company', 'systemLogo', 'systemFavicon'));
     }
 
     //company update method
-    public function companyUpdate()
+    public function companyUpdate(Request $request)
     {
-        return view('pages.settings.company');
+        $request->validate([
+            'company_name' => 'required',
+            'tagline' => 'required',
+            'email' => 'required',
+            'whatsapp' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
+
+        $company = SystemShortInfo::find(1);
+        if ($company == null) {
+            toastr()->warning('Item not found');
+            return redirect()->back();
+        }
+
+        $company->company_name = $request->input('company_name');
+        $company->tagline = $request->input('tagline');
+        $company->email = $request->input('email');
+        $company->whatsapp = $request->input('whatsapp');
+        $company->phone = $request->input('phone');
+        $company->address = $request->input('address');
+        $company->save();
+
+        // Handle file uploads
+        if ($request->hasFile('logo')) {
+            $systemLogo = SystemImage::where('type', 'logo')->first();
+            if ($systemLogo == null) {
+                toastr()->warning('Item not found');
+                return redirect()->back();
+            }
+            $logoImg = $request->logo;
+            $input['logoImg'] = time() . '.' . $logoImg->getClientOriginalExtension();
+            $logoDestination = public_path('uploads/img');
+            $img = Image::make($logoImg->getRealPath());
+            $img->save($logoDestination . '/' . $input['logoImg'], 70);
+            $systemLogo->file = 'uploads/img/' . $input['logoImg'];
+            $systemLogo->save();
+        }
+
+        if ($request->hasFile('favicon')) {
+            $systemFavicon = SystemImage::where('type', 'favicon')->first();
+            if ($systemFavicon == null) {
+                toastr()->warning('Item not found');
+                return redirect()->back();
+            }
+            $faviconImg = $request->favicon;
+            $input['faviconImg'] = time() . '.' . $faviconImg->getClientOriginalExtension();
+            $faviconDestination = public_path('uploads/img');
+            $imgFavicon = Image::make($faviconImg->getRealPath());
+            $imgFavicon->save($faviconDestination . '/' . $input['faviconImg'], 70);
+            $systemFavicon->file = 'uploads/img/' . $input['faviconImg'];
+            $systemFavicon->save();
+        }
+
+        toastr()->success('Company info updated successfully');
+        return redirect()->back();
     }
 
     //clear cache method

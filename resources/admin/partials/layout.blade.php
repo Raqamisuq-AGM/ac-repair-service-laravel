@@ -1,3 +1,7 @@
+@php
+    $systemLogo = App\Models\SystemImage::where('type', 'logo')->first();
+    $systemFavicon = App\Models\SystemImage::where('type', 'favicon')->first();
+@endphp
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-compact layout-navbar-fixed layout-menu-fixed" dir="ltr"
@@ -13,7 +17,7 @@
         @yield('title')
     </title>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('/uploads/img/favicon.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset($systemFavicon->file) }}" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

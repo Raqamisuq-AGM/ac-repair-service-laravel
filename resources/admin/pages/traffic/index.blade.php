@@ -10,8 +10,53 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-header">Traffics (6)</h5>
+                        <h5 class="card-header">Traffics ({{ $items->total() }})</h5>
                     </div>
+
+                    {{-- pagination --}}
+                    <div class="dataTables_paginate paging_simple_numbers mt-4"
+                        style="width: 100%;
+                        display: flex;
+                        flex-direction: row-reverse;">
+                        <ul class="pagination">
+                            @if ($items->onFirstPage())
+                                <li class="paginate_button page-item previous disabled">
+                                    <a class="page-link">
+                                        <i class="bx bx-chevron-left bx-18px"></i>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="paginate_button page-item previous">
+                                    <a class="page-link" href="{{ $items->previousPageUrl() }}">
+                                        <i class="bx bx-chevron-left bx-18px"></i>
+                                    </a>
+                                </li>
+                            @endif
+
+                            @foreach ($items->getUrlRange(1, $items->lastPage()) as $page => $url)
+                                <li class="paginate_button page-item {{ $page == $items->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">
+                                        {{ $page }}
+                                    </a>
+                                </li>
+                            @endforeach
+
+                            @if ($items->hasMorePages())
+                                <li class="paginate_button page-item next">
+                                    <a class="page-link" href="{{ $items->nextPageUrl() }}">
+                                        <i class="bx bx-chevron-right bx-18px"></i>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="paginate_button page-item next disabled">
+                                    <a class="page-link">
+                                        <i class="bx bx-chevron-right bx-18px"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                             <thead>
@@ -28,58 +73,77 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td>
-                                        123.56.25.98
-                                    </td>
-                                    <td>Windows</td>
-                                    <td>WebKit</td>
-                                    <td>Chrome</td>
-                                    <td>Dhaka</td>
-                                    <td>Bangladesh</td>
-                                    <td>BD</td>
-                                    <td>1212</td>
-                                    <td>24-08-19 08:09 PM</td>
-                                </tr>
+                                @forelse($items as $index => $item)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $item->ip }}</td>
+                                        <td>{{ $item->plateform }}</td>
+                                        <td>{{ $item->device }}</td>
+                                        <td>{{ $item->browser }}</td>
+                                        <td>{{ $item->city }}</td>
+                                        <td>{{ $item->country }}</td>
+                                        <td>{{ $item->country_code }}</td>
+                                        <td>{{ $item->zip_code }}</td>
+                                        <td>
+                                            @php
+                                                $formattedDate = \Carbon\Carbon::parse($item->created_at)->format(
+                                                    'd-m-y h:i A',
+                                                );
+                                            @endphp
+                                            {{ $formattedDate }}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">No data found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
+                    </div>
 
-                        <div class="dataTables_paginate paging_simple_numbers mt-4"
-                            style="width: 100%;
-                                display: flex;
-                                flex-direction: row-reverse;">
-                            <ul class="pagination">
+                    {{-- pagination --}}
+                    <div class="dataTables_paginate paging_simple_numbers mt-4"
+                        style="width: 100%;
+                        display: flex;
+                        flex-direction: row-reverse;">
+                        <ul class="pagination">
+                            @if ($items->onFirstPage())
                                 <li class="paginate_button page-item previous disabled">
                                     <a class="page-link">
                                         <i class="bx bx-chevron-left bx-18px"></i>
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item active">
-                                    <a href="#" class="page-link">
-                                        1
+                            @else
+                                <li class="paginate_button page-item previous">
+                                    <a class="page-link" href="{{ $items->previousPageUrl() }}">
+                                        <i class="bx bx-chevron-left bx-18px"></i>
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" class="page-link">
-                                        2
+                            @endif
+
+                            @foreach ($items->getUrlRange(1, $items->lastPage()) as $page => $url)
+                                <li class="paginate_button page-item {{ $page == $items->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">
+                                        {{ $page }}
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item disabled"><a class="page-link">
-                                        …
-                                    </a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" class="page-link">
-                                        15
-                                    </a>
-                                </li>
+                            @endforeach
+
+                            @if ($items->hasMorePages())
                                 <li class="paginate_button page-item next">
-                                    <a href="#" class="page-link">
+                                    <a class="page-link" href="{{ $items->nextPageUrl() }}">
                                         <i class="bx bx-chevron-right bx-18px"></i>
                                     </a>
                                 </li>
-                            </ul>
-                        </div>
+                            @else
+                                <li class="paginate_button page-item next disabled">
+                                    <a class="page-link">
+                                        <i class="bx bx-chevron-right bx-18px"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
                     </div>
                 </div>
             </div>

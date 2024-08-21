@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             SystemImageSeeder::class,
             SystemShotInfoSeeder::class,
             ContactUsMailSeeder::class,
+            CustomCodeSeeder::class,
         ]);
     }
 }

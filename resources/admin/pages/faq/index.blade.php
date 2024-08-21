@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-header">Faqs (6)</h5>
+                        <h5 class="card-header">Faqs ({{ $items->total() }})</h5>
                         <a href="{{ route('faq.create') }}" class="btn btn-primary me-4">
                             Create
                         </a>
@@ -25,68 +25,77 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td>1</td>
-                                    <td>Serfvice Title 1</td>
-                                    <td>
-                                        <span class="d-flex">
-                                            <a href="{{ route('faq.edit', ['id' => '1']) }}" class="me-4"
-                                                style="border: none;
-                                                background: transparent;
-                                                color: red;
-                                                font-size: 20px;">
-                                                <i class='bx bx-pencil'></i>
-                                            </a>
-                                            <button type="button" class="" data-bs-toggle="modal"
-                                                data-bs-target="#deleteItemModal"
-                                                style="border: none;
-                                                background: transparent;
-                                                color: red;
-                                                font-size: 20px;">
-                                                <i class='bx bx-trash'></i>
-                                            </button>
-                                        </span>
-                                    </td>
-                                </tr>
+                                @forelse($items as $index => $item)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $item->ques }}</td>
+                                        <td>
+                                            <span class="d-flex">
+                                                <a href="{{ route('faq.edit', ['id' => $item->id]) }}" class="me-4"
+                                                    style="border: none; background: transparent; color: #696cff; font-size: 20px;">
+                                                    <i class='bx bx-pencil'></i>
+                                                </a>
+                                                <button type="submit"
+                                                    style="border: none; background: transparent; color: #696cff; font-size: 20px;"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteItemModal"
+                                                    data-category-id="{{ $item->id }}"
+                                                    onclick="document.getElementById('ItemID').value = {{ $item->id }}">
+                                                    <i class='bx bx-trash'></i>
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">No data found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
+                    </div>
 
-                        <div class="dataTables_paginate paging_simple_numbers mt-4"
-                            style="width: 100%;
-                                display: flex;
-                                flex-direction: row-reverse;">
-                            <ul class="pagination">
+                    {{-- pagination --}}
+                    <div class="dataTables_paginate paging_simple_numbers mt-4"
+                        style="width: 100%;
+                        display: flex;
+                        flex-direction: row-reverse;">
+                        <ul class="pagination">
+                            @if ($items->onFirstPage())
                                 <li class="paginate_button page-item previous disabled">
                                     <a class="page-link">
                                         <i class="bx bx-chevron-left bx-18px"></i>
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item active">
-                                    <a href="#" class="page-link">
-                                        1
+                            @else
+                                <li class="paginate_button page-item previous">
+                                    <a class="page-link" href="{{ $items->previousPageUrl() }}">
+                                        <i class="bx bx-chevron-left bx-18px"></i>
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" class="page-link">
-                                        2
+                            @endif
+
+                            @foreach ($items->getUrlRange(1, $items->lastPage()) as $page => $url)
+                                <li class="paginate_button page-item {{ $page == $items->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">
+                                        {{ $page }}
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item disabled"><a class="page-link">
-                                        …
-                                    </a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" class="page-link">
-                                        15
-                                    </a>
-                                </li>
+                            @endforeach
+
+                            @if ($items->hasMorePages())
                                 <li class="paginate_button page-item next">
-                                    <a href="#" class="page-link">
+                                    <a class="page-link" href="{{ $items->nextPageUrl() }}">
                                         <i class="bx bx-chevron-right bx-18px"></i>
                                     </a>
                                 </li>
-                            </ul>
-                        </div>
+                            @else
+                                <li class="paginate_button page-item next disabled">
+                                    <a class="page-link">
+                                        <i class="bx bx-chevron-right bx-18px"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -104,15 +113,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Do you want to delete this item
+                    Do you want to delete this item?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <form action="#">
+                    <form id="deleteForm" action="{{ route('faq.delete', ['id' => 0]) }}" method="POST">
                         @csrf
-                        <button type="button" class="btn btn-primary">
+                        <input type="hidden" name="id" id="ItemID">
+                        <button type="submit" class="btn btn-primary">
                             Yes
                         </button>
                     </form>
@@ -120,4 +130,21 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteLinks = document.querySelectorAll('.delete-item');
+
+            deleteLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const itemId = this.dataset.itemId;
+                    const form = document.querySelector('#deleteForm');
+                    form.action = '{{ route('faq.delete', ['id' => '']) }}/' + itemId;
+                });
+            });
+        });
+    </script>
 @endsection
