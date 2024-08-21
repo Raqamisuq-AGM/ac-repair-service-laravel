@@ -1,7 +1,7 @@
 @extends('partials.layout')
 
 @section('title')
-    {{ 'Blogs' }}
+    {{ 'Mails' }}
 @endsection
 
 @section('content')
@@ -10,11 +10,53 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-header">Blogs (6)</h5>
-                        <a href="{{ route('blog.create') }}" class="btn btn-primary me-4">
-                            Create
-                        </a>
+                        <h5 class="card-header">Mails ({{ $counts }})</h5>
                     </div>
+
+                    {{-- pagination --}}
+                    <div class="dataTables_paginate paging_simple_numbers mt-4"
+                        style="width: 100%;
+                        display: flex;
+                        flex-direction: row-reverse;">
+                        <ul class="pagination">
+                            @if ($items->onFirstPage())
+                                <li class="paginate_button page-item previous disabled">
+                                    <a class="page-link">
+                                        <i class="bx bx-chevron-left bx-18px"></i>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="paginate_button page-item previous">
+                                    <a class="page-link" href="{{ $items->previousPageUrl() }}">
+                                        <i class="bx bx-chevron-left bx-18px"></i>
+                                    </a>
+                                </li>
+                            @endif
+
+                            @foreach ($items->getUrlRange(1, $items->lastPage()) as $page => $url)
+                                <li class="paginate_button page-item {{ $page == $items->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">
+                                        {{ $page }}
+                                    </a>
+                                </li>
+                            @endforeach
+
+                            @if ($items->hasMorePages())
+                                <li class="paginate_button page-item next">
+                                    <a class="page-link" href="{{ $items->nextPageUrl() }}">
+                                        <i class="bx bx-chevron-right bx-18px"></i>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="paginate_button page-item next disabled">
+                                    <a class="page-link">
+                                        <i class="bx bx-chevron-right bx-18px"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                             <thead>
@@ -23,96 +65,85 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Subject</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td>1</td>
-                                    <td>test@mail.com</td>
-                                    <td>015897456230</td>
-                                    <td>test subject f ag rae</td>
-                                    <td>
-                                        <span class="d-flex">
-                                            <button type="button" class="" data-bs-toggle="modal"
-                                                data-bs-target="#viewItemModal"
-                                                style="border: none;
-                                                background: transparent;
-                                                color: red;
-                                                font-size: 20px;">
-                                                <i class="fa-regular fa-eye"></i>
-                                            </button>
-                                        </span>
-                                    </td>
-                                </tr>
+                                @forelse($items as $index => $item)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->phone }}</td>
+                                        <td>{{ $item->subject }}</td>
+                                        <td>
+                                            <span
+                                                class="badge bg-{{ $item->status == 'read' ? 'success' : ($item->status == 'unread' ? 'warning' : 'danger') }}">
+                                                {{ ucfirst($item->status) }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="d-flex">
+                                                <a href="{{ route('contact_mail.view', ['id' => $item->id]) }}"
+                                                    class="me-4"
+                                                    style="border: none; background: transparent; color: #696cff; font-size: 20px;">
+                                                    <i class="fa-regular fa-eye"></i>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center">No data found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
+                    </div>
 
-                        <div class="dataTables_paginate paging_simple_numbers mt-4"
-                            style="width: 100%;
-                                display: flex;
-                                flex-direction: row-reverse;">
-                            <ul class="pagination">
+                    {{-- pagination --}}
+                    <div class="dataTables_paginate paging_simple_numbers mt-4"
+                        style="width: 100%;
+                        display: flex;
+                        flex-direction: row-reverse;">
+                        <ul class="pagination">
+                            @if ($items->onFirstPage())
                                 <li class="paginate_button page-item previous disabled">
                                     <a class="page-link">
                                         <i class="bx bx-chevron-left bx-18px"></i>
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item active">
-                                    <a href="#" class="page-link">
-                                        1
+                            @else
+                                <li class="paginate_button page-item previous">
+                                    <a class="page-link" href="{{ $items->previousPageUrl() }}">
+                                        <i class="bx bx-chevron-left bx-18px"></i>
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" class="page-link">
-                                        2
+                            @endif
+
+                            @foreach ($items->getUrlRange(1, $items->lastPage()) as $page => $url)
+                                <li class="paginate_button page-item {{ $page == $items->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">
+                                        {{ $page }}
                                     </a>
                                 </li>
-                                <li class="paginate_button page-item disabled"><a class="page-link">
-                                        …
-                                    </a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" class="page-link">
-                                        15
-                                    </a>
-                                </li>
+                            @endforeach
+
+                            @if ($items->hasMorePages())
                                 <li class="paginate_button page-item next">
-                                    <a href="#" class="page-link">
+                                    <a class="page-link" href="{{ $items->nextPageUrl() }}">
                                         <i class="bx bx-chevron-right bx-18px"></i>
                                     </a>
                                 </li>
-                            </ul>
-                        </div>
+                            @else
+                                <li class="paginate_button page-item next disabled">
+                                    <a class="page-link">
+                                        <i class="bx bx-chevron-right bx-18px"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Delete item Modal -->
-    <div class="modal fade" id="viewItemModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalCenterTitle">
-                        Delete item
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Do you want to delete this item
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <form action="#">
-                        @csrf
-                        <button type="button" class="btn btn-primary">
-                            Yes
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ class ContactUsMailSeeder extends Seeder
         $faker = Faker::create();
 
         // Generate fake contact us messages
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             ContactUsMail::create([
                 'name' => $faker->name,
                 'email' => $faker->email,

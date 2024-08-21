@@ -53,7 +53,14 @@
                                             <td>{{ $traffic->country }}</td>
                                             <td>{{ $traffic->country_code }}</td>
                                             <td>{{ $traffic->zip_code }}</td>
-                                            <td>24-08-19 08:09 PM</td>
+                                            <td>
+                                                @php
+                                                    $formattedDate = \Carbon\Carbon::parse(
+                                                        $traffic->created_at,
+                                                    )->format('d-m-y h:i A');
+                                                @endphp
+                                                {{ $formattedDate }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else

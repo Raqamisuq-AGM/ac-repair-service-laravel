@@ -1,9 +1,13 @@
+@php
+    $systemLogo = App\Models\SystemImage::where('type', 'logo')->first();
+    $systemFavicon = App\Models\SystemImage::where('type', 'favicon')->first();
+@endphp
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <!-- ! Hide app brand if navbar-full -->
     <div class="app-brand demo">
         <a href="{{ url('/admin/dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{ asset('/uploads/img/logo.png') }}" alt="" style="width: 70%;">
+                <img src="{{ asset($systemLogo->file) }}" alt="" style="width: 70%;">
             </span>
             {{-- <span class="app-brand-text demo menu-text fw-bold ms-2">Sneat</span> --}}
         </a>
@@ -21,12 +25,12 @@
         </li>
 
         {{-- category route --}}
-        <li class="menu-item {{ request()->routeIs('category.all') ? 'active' : '' }}">
+        {{-- <li class="menu-item {{ request()->routeIs('category.all') ? 'active' : '' }}">
             <a href="{{ route('category.all') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-category'></i>
                 <div class="text-truncate">Categories</div>
             </a>
-        </li>
+        </li> --}}
 
         {{-- service route --}}
         <li
@@ -139,14 +143,14 @@
 
         {{-- settings route --}}
         <li
-            class="menu-item {{ request()->routeIs('settings.clearCache', 'settings.generateSitemap', 'settings.custom.codempany', 'settings.company', 'settings.changeEmail', 'settings.changePassword') ? 'active open' : '' }}">
+            class="menu-item {{ request()->routeIs('settings.clearCache', 'settings.generateSitemap', 'settings.custom.code', 'settings.company', 'settings.changeEmail', 'settings.changePassword') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bx-cog'></i>
                 <div class="text-truncate">Settings</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->routeIs('settings.custom.codempany') ? 'active' : '' }}">
+                <li class="menu-item {{ request()->routeIs('settings.custom.code') ? 'active' : '' }}">
                     <a href="{{ route('settings.custom.code') }}" class="menu-link">
                         <div>Custom Code</div>
                     </a>

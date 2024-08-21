@@ -22,7 +22,7 @@ class TeamSeeder extends Seeder
             mkdir($uploadPath, 0777, true);
         }
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             // Create a fake image
             $imageName = $faker->image($uploadPath, 800, 600, null, false);
 
