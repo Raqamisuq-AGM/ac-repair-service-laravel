@@ -18,10 +18,10 @@
     @endforeach
 @endsection
 @section('og_image')
-    {{ $blog->meta_og_thumb }}
+    {{ asset($blog->meta_og_thumb) }}
 @endsection
 @section('twitter_image')
-    {{ $blog->meta_og_thumb }}
+    {{ asset($blog->meta_og_thumb) }}
 @endsection
 
 @section('content')

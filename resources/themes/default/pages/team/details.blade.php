@@ -18,10 +18,10 @@
     @endforeach
 @endsection
 @section('og_image')
-    {{ $team->photo }}
+    {{ asset($team->photo) }}
 @endsection
 @section('twitter_image')
-    {{ $team->photo }}
+    {{ asset($team->photo) }}
 @endsection
 
 @section('content')
