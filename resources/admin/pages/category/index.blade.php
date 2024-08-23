@@ -1,7 +1,7 @@
 @extends('partials.layout')
 
 @section('title')
-    {{ 'Porthub Admin' }}
+    {{ 'Categories' }}
 @endsection
 
 @section('content')

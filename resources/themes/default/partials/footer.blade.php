@@ -1,24 +1,27 @@
+{{-- @php
+    $systemLogo = App\Models\SystemImage::where('type', 'logo')->first();
+    $systemShortInfo = App\Models\SystemShortInfo::where('id', '1')->first();
+@endphp --}}
 <footer class="main-footer">
     <div class="bg footer-bg"></div>
 
-    <div class="widgets-section">
+    {{-- <div class="widgets-section">
         <div class="auto-container">
             <div class="row">
                 <div class="footer-column col-sm-6 col-lg-4">
                     <div class="footer-widget about-widget">
-                        <div class="logo-box">
-                            <img src="{{ asset('/uploads/img/logo-2.png') }}" alt />
-                        </div>
-                        <div class="text">
-                            Lorem ipsum dolor at sit amet suffered simply tempor fames.
+                        <div class="logo-box" style="max-width:165px;">
+                            <img src="{{ asset($systemLogo->file) }}" alt />
                         </div>
                         <ul class="list-style-two">
                             <li>
                                 <a href="tel:+1234567890"><i class="fa-regular fa-phone-volume fa-fw"></i>
-                                    +012-345-6789</a>
+                                    {{ $systemShortInfo->phone }}</a>
                             </li>
                             <li>
-                                <a href="#"> <span>example@gmail.com</span></a>
+                                <a href="#">
+                                    <i class="fa-regular fa-envelope fa-fw"></i>
+                                    <span>{{ $systemShortInfo->email }}</span></a>
                             </li>
                         </ul>
                         <ul class="social-icon-two">
@@ -92,7 +95,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="footer-bottom">
         <div class="auto-container">
@@ -102,7 +105,7 @@
                     <script>
                         document.write(new Date().getFullYear());
                     </script>
-                    , All Rights reserved
+                    All Rights reserved
                 </div>
             </div>
         </div>

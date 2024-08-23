@@ -5,7 +5,7 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <!-- ! Hide app brand if navbar-full -->
     <div class="app-brand demo">
-        <a href="{{ url('/admin/dashboard') }}" class="app-brand-link">
+        <a href="{{ route('dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <img src="{{ asset($systemLogo->file) }}" alt="" style="width: 70%;">
             </span>
@@ -134,12 +134,12 @@
         </li>
 
         {{-- frontend route --}}
-        <li class="menu-item {{ request()->routeIs('frontend.all') ? 'active' : '' }}">
+        {{-- <li class="menu-item {{ request()->routeIs('frontend.all') ? 'active' : '' }}">
             <a href="{{ route('frontend.all') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-collection'></i>
                 <div class="text-truncate">Frontend</div>
             </a>
-        </li>
+        </li> --}}
 
         {{-- settings route --}}
         <li

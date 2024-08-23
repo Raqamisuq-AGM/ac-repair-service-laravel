@@ -18,8 +18,8 @@ class SystemImageSeeder extends Seeder
 
         // Create fake images for logo and favicon
         $images = [
-            ['type' => 'logo', 'file' => 'logo.png'],
-            ['type' => 'favicon', 'file' => 'favicon.png'],
+            ['type' => 'logo', 'file' => 'uploads/img/logo.png'],
+            ['type' => 'favicon', 'file' => 'uploads/img/favicon.png'],
         ];
 
         foreach ($images as $image) {

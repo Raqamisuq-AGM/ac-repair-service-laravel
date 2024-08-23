@@ -1,7 +1,7 @@
 @extends('partials.login')
 
 @section('title')
-    {{ 'Login' }}
+    {{ 'Admin Login' }}
 @endsection
 
 @section('content')

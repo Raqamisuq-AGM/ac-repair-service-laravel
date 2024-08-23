@@ -1,17 +1,27 @@
+@php
+    $dataArray = json_decode($blog->meta_keyword);
+@endphp
+
 @extends(themeView('partials.layout'))
 
 @section('title')
-    {{ 'Blogs' }}
+    {{ $blog->meta_title }}
 @endsection
 @section('description')
-    {{ 'description' }}
+    {{ $blog->meta_desc }}
 @endsection
 @section('keywords')
-    {{ 'keywords' }}
+    @foreach ($dataArray as $index => $item)
+        {{ $item->value }}@if (!$loop->last)
+            ,
+        @endif
+    @endforeach
 @endsection
 @section('og_image')
+    {{ $blog->meta_og_thumb }}
 @endsection
 @section('twitter_image')
+    {{ $blog->meta_og_thumb }}
 @endsection
 
 @section('content')
@@ -33,42 +43,24 @@
                 <div class="col-xl-8 col-lg-7">
                     <div class="blog-details__left">
                         <div class="blog-details__img">
-                            <img src="{{ asset('/uploads/img/news-details.jpg') }}" alt />
+                            <img src="{{ asset($blog->cover_photo) }}" alt />
+                            @php
+                                $date = $blog->created_at; // Your datetime string
+                                $formattedDate = \Carbon\Carbon::parse($date); // Parse the date string using Carbon
+                                $day = $formattedDate->format('d'); // Get the day of the month
+                                $month = $formattedDate->format('M'); // Get the abbreviated month name
+                            @endphp
                             <div class="blog-details__date">
-                                <span class="day">28</span>
-                                <span class="month">Aug</span>
+                                <span class="day">{{ $day }}</span>
+                                <span class="month">{{ $month }}</span>
                             </div>
                         </div>
                         <div class="blog-details__content">
                             <h3 class="blog-details__title">
-                                We very careful handling the valuable goods
+                                {{ $blog->title }}
                             </h3>
                             <p class="blog-details__text-2">
-                                Mauris non dignissim purus, ac commodo diam. Donec sit amet
-                                lacinia nulla. Aliquam quis purus in justo pulvinar tempor.
-                                Aliquam tellus nulla, sollicitudin at euismod nec, feugiat
-                                at nisi. Quisque vitae odio nec lacus interdum tempus.
-                                Phasellus a rhoncus erat. Vivamus vel eros vitae est aliquet
-                                pellentesque vitae et nunc. Sed vitae leo vitae nisl
-                                pellentesque semper.
-                            </p>
-                            <p class="blog-details__text-2">
-                                Mauris non dignissim purus, ac commodo diam. Donec sit amet
-                                lacinia nulla. Aliquam quis purus in justo pulvinar tempor.
-                                Aliquam tellus nulla, sollicitudin at euismod nec, feugiat
-                                at nisi. Quisque vitae odio nec lacus interdum tempus.
-                                Phasellus a rhoncus erat. Vivamus vel eros vitae est aliquet
-                                pellentesque vitae et nunc. Sed vitae leo vitae nisl
-                                pellentesque semper.
-                            </p>
-                            <p class="blog-details__text-2">
-                                Mauris non dignissim purus, ac commodo diam. Donec sit amet
-                                lacinia nulla. Aliquam quis purus in justo pulvinar tempor.
-                                Aliquam tellus nulla, sollicitudin at euismod nec, feugiat
-                                at nisi. Quisque vitae odio nec lacus interdum tempus.
-                                Phasellus a rhoncus erat. Vivamus vel eros vitae est aliquet
-                                pellentesque vitae et nunc. Sed vitae leo vitae nisl
-                                pellentesque semper.
+                                {!! $blog->desc !!}
                             </p>
                         </div>
                         {{-- <div class="blog-details__bottom">
@@ -98,39 +90,21 @@
                         <div class="sidebar__single sidebar__post">
                             <h3 class="sidebar__title">More Posts</h3>
                             <ul class="sidebar__post-list list-unstyled">
-                                <li>
-                                    <div class="sidebar__post-image">
-                                        <img src="{{ asset('/uploads/img/news-2.jpg') }}" alt />
-                                    </div>
-                                    <div class="sidebar__post-content">
-                                        <h3>
-                                            <a href="{{ route('blog.details', ['slug' => 'fgwae']) }}">Cargo flow through
-                                                better supply UK</a>
-                                        </h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="sidebar__post-image">
-                                        <img src="{{ asset('/uploads/img/news-1.jpg') }}" alt />
-                                    </div>
-                                    <div class="sidebar__post-content">
-                                        <h3>
-                                            <a href="{{ route('blog.details', ['slug' => 'fgwae']) }}">Why is supply chain
-                                                visibility so?</a>
-                                        </h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="sidebar__post-image">
-                                        <img src="{{ asset('/uploads/img/news-3.jpg') }}" alt />
-                                    </div>
-                                    <div class="sidebar__post-content">
-                                        <h3>
-                                            <a href="{{ route('blog.details', ['slug' => 'fgwae']) }}">We very careful
-                                                handling</a>
-                                        </h3>
-                                    </div>
-                                </li>
+                                @if ($blogs->isNotEmpty())
+                                    @foreach ($blogs as $item)
+                                        <li>
+                                            <div class="sidebar__post-image">
+                                                <img src="{{ asset($item->cover_photo) }}" alt />
+                                            </div>
+                                            <div class="sidebar__post-content">
+                                                <h3>
+                                                    <a
+                                                        href="{{ route('blog.details', ['slug' => $item->slug]) }}">{{ $item->title }}</a>
+                                                </h3>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                         {{-- <div class="sidebar__single sidebar__category">

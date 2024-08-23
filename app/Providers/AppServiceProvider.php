@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Theme;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Pagination\Paginator;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrap();
         if (Schema::hasTable('themes')) {
             // Load active theme
             $themes = Theme::where('status', '1')->first();

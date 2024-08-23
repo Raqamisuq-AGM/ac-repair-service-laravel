@@ -1,7 +1,7 @@
 @extends('partials.layout')
 
 @section('title')
-    {{ 'Mails' }}
+    {{ 'View Mail' }}
 @endsection
 
 @section('content')

@@ -1,17 +1,27 @@
+@php
+    $dataArray = json_decode($systemSeo->meta_keyword);
+@endphp
+
 @extends(themeView('partials.layout'))
 
 @section('title')
-    {{ 'Team Details' }}
+    {{ $team->name }}{{ ' | ' . $systemSeo->meta_title }}
 @endsection
 @section('description')
-    {{ 'description' }}
+    {{ $systemSeo->meta_desc }}
 @endsection
 @section('keywords')
-    {{ 'keywords' }}
+    @foreach ($dataArray as $index => $item)
+        {{ $item->value }}@if (!$loop->last)
+            ,
+        @endif
+    @endforeach
 @endsection
 @section('og_image')
+    {{ $team->photo }}
 @endsection
 @section('twitter_image')
+    {{ $team->photo }}
 @endsection
 
 @section('content')
@@ -34,7 +44,7 @@
                     <div class="col-xl-6 col-lg-6">
                         <div class="team-details__top-left">
                             <div class="team-details__top-img">
-                                <img src="{{asset('/uploads/img/team-details.jpg')}}" alt />
+                                <img src="{{ asset($team->photo) }}" alt />
                                 <div class="team-details__big-text">Richerd</div>
                             </div>
                         </div>
@@ -42,76 +52,19 @@
                     <div class="col-xl-6 col-lg-6">
                         <div class="team-details__top-right">
                             <div class="team-details__top-content">
-                                <h3 class="team-details__top-name">Richerd Fred</h3>
+                                <h3 class="team-details__top-name">{{ $team->name }}</h3>
                                 <p class="team-details__top-title">
-                                    Managing Director & CEO
+                                    {{ $team->position }}
                                 </p>
                                 <div class="team-details__social">
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-facebook"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="{{ $team->twitter }}"><i class="fab fa-twitter"></i></a>
+                                    <a href="{{ $team->fb }}"><i class="fab fa-facebook"></i></a>
+                                    <a href="{{ $team->whatsapp }}"><i class="fab fa-whatsapp"></i></a>
+                                    <a href="{{ $team->instagram }}"><i class="fab fa-instagram"></i></a>
                                 </div>
-                                <p class="team-details__top-text-1">
-                                    I help my clients stand out and <br />
-                                    they help me grow.
-                                </p>
                                 <p class="team-details__top-text-3">
-                                    Lorem ipsum is simply free text used by copytyping
-                                    refreshing. Neque porro est qui dolorem ipsum quia quaed
-                                    inventore veritatis et quasi architecto beatae
+                                    {!! $team->description !!}
                                 </p>
-                                <p class="team-details__top-text-2">
-                                    When an unknown printer took a galley of type and
-                                    scrambled it to make a type specimen book. It has survived
-                                    not only five centuries architecto
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="team-details__bottom pt-100">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="team-details__bottom-left">
-                            <h4 class="team-details__bottom-left-title">
-                                Personal Experience
-                            </h4>
-                            <p class="team-details__bottom-left-text">
-                                When an unknown printer took a galley of type and scrambled
-                                it to make a type specimen book. It has survived not only
-                                five centuries architecto dolorem ipsum quia
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="team-details__bottom-right">
-                            <div class="team-details__progress">
-                                <div class="team-details__progress-single">
-                                    <h4 class="team-details__progress-title">Marketing</h4>
-                                    <div class="bar">
-                                        <div class="bar-inner count-bar" data-percent="90%">
-                                            <div class="count-text">90%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="team-details__progress-single">
-                                    <h4 class="team-details__progress-title">Farming</h4>
-                                    <div class="bar">
-                                        <div class="bar-inner count-bar" data-percent="46%">
-                                            <div class="count-text">76%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="team-details__progress-single">
-                                    <h4 class="team-details__progress-title">Business</h4>
-                                    <div class="bar marb-0">
-                                        <div class="bar-inner count-bar" data-percent="60%">
-                                            <div class="count-text">60%</div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,17 +1,27 @@
+@php
+    $dataArray = json_decode($systemSeo->meta_keyword);
+@endphp
+
 @extends(themeView('partials.layout'))
 
 @section('title')
-    {{ 'Faqs' }}
+    {{ 'Faqs | ' }}{{ $systemSeo->meta_title }}
 @endsection
 @section('description')
-    {{ 'description' }}
+    {{ $systemSeo->meta_desc }}
 @endsection
 @section('keywords')
-    {{ 'keywords' }}
+    @foreach ($dataArray as $index => $item)
+        {{ $item->value }}@if (!$loop->last)
+            ,
+        @endif
+    @endforeach
 @endsection
 @section('og_image')
+    {{ $systemSeo->meta_og_thumb }}
 @endsection
 @section('twitter_image')
+    {{ $systemSeo->meta_og_thumb }}
 @endsection
 
 @section('content')
@@ -30,148 +40,28 @@
     <section class="innerpage">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <ul class="accordion-box wow fadeInRight">
-                        <li class="accordion block active-block">
-                            <div class="acc-btn active">
-                                How to soft launch your business?
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content current">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
+                        @if ($faqs->isNotEmpty())
+                            @foreach ($faqs as $faq)
+                                <li class="accordion block {{ $loop->first ? 'active-block' : '' }}">
+                                    <div class="acc-btn {{ $loop->first ? 'active' : '' }}">
+                                        {{ $faq->ques }}
+                                        <div class="icon fa fa-plus"></div>
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="accordion block">
-                            <div class="acc-btn">
-                                Is my technology allowed on tech?
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
+                                    <div class="acc-content {{ $loop->first ? 'current' : '' }}">
+                                        <div class="content">
+                                            <div class="text">
+                                                {{ $faq->ans }}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="accordion block">
-                            <div class="acc-btn">
-                                How to turn visitors into contributors
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="accordion block mb-0">
-                            <div class="acc-btn">
-                                How can i find my solutions?
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
-                <div class="col-md-6">
-                    <ul class="accordion-box wow fadeInRight">
-                        <li class="accordion block">
-                            <div class="acc-btn">
-                                How to soft launch your business?
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
 
-                        <li class="accordion block active-block">
-                            <div class="acc-btn active">
-                                Is my technology allowed on tech?
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content current">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="accordion block">
-                            <div class="acc-btn">
-                                How to turn visitors into contributors
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="accordion block mb-0">
-                            <div class="acc-btn">
-                                How can i find my solutions?
-                                <div class="icon fa fa-plus"></div>
-                            </div>
-                            <div class="acc-content">
-                                <div class="content">
-                                    <div class="text">
-                                        There are many variations of passages the majority have
-                                        suffered alteration in some fo injected humour or random
-                                        ised words believ able lorem Ipsum generators on the
-                                        internet tend to repeat predefined chunks as necessary.
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
     </section>
