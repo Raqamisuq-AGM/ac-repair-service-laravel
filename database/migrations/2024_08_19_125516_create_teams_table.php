@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('position')->nullable();
             $table->string('photo')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('fb')->nullable();
             $table->string('twitter')->nullable();
             $table->string('instagram')->nullable();

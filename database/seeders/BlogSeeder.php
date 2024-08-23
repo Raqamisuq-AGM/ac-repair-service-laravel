@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 
 class BlogSeeder extends Seeder
 {
@@ -18,18 +19,24 @@ class BlogSeeder extends Seeder
         $faker = Faker::create();
 
         // Create directories if they do not exist
-        $uploadPath = public_path('uploads/img');
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0777, true);
-        }
+        // $uploadPath = public_path('uploads/img');
+        // if (!file_exists($uploadPath)) {
+        //     mkdir($uploadPath, 0777, true);
+        // }
 
         // Get existing categories and subcategories
         $categories = Category::all();
         $subCategories = SubCategory::all();
 
+        // Generate multiple keywords
+        $keywords = [];
+        for ($i = 0; $i < 3; $i++) { // Change 3 to the number of keywords you want to generate
+            $keywords[] = ['value' => Str::slug($faker->word)];
+        }
+
         for ($i = 0; $i < 20; $i++) {
             // Generate a fake image
-            $imageName = $faker->image($uploadPath, 800, 600, null, false);
+            // $imageName = $faker->image($uploadPath, 800, 600, null, false);
 
             // Randomly select a category and a subcategory
             $category = $categories->random();
@@ -38,22 +45,23 @@ class BlogSeeder extends Seeder
             // Save blog entry
             Blog::create([
                 'title' => $faker->sentence,
+                'slug' => Str::slug($faker->name),
                 'short_title' => $faker->word,
                 'icon' => 'icon-' . $faker->word,
                 'short_icon' => 'icon-short-' . $faker->word,
                 'position' => $i + 1,
-                'cover_photo' => 'uploads/img/' . $imageName,
+                'cover_photo' => 'uploads/img/news-1.jpg',
                 'desc' => $faker->paragraph,
                 'short_desc' => $faker->sentence,
                 'category' => $category->category,
                 'sub_category' => $subCategory->sub_category,
-                'tags' => implode(', ', $faker->words(3)),
+                'tags' => json_encode($keywords),
                 'meta_title' => $faker->sentence,
-                'meta_keyword' => implode(', ', $faker->words(3)),
+                'meta_keyword' => json_encode($keywords),
                 'meta_desc' => $faker->paragraph,
                 'meta_author' => $faker->name,
-                'meta_tags' => implode(', ', $faker->words(3)),
-                'meta_og_thumb' => 'uploads/img/' . $imageName,
+                'meta_tags' => json_encode($keywords),
+                'meta_og_thumb' => 'uploads/img/news-1.jpg',
                 'status' => $faker->numberBetween(0, 1),
             ]);
         }

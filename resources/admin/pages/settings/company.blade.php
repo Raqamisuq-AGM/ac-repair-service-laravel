@@ -97,10 +97,77 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
+
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            <h3>SEO</h3>
+                            <div class="form-group mt-3">
+                                <label for="meta_title" class="form-label">Meta Title</label>
+                                <input name="meta_title" id="meta_title" class="form-control"
+                                    value="{{ $companySeo->meta_title }}" />
+                                @error('meta_title')
+                                    <div class="form-text text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="meta_author" class="form-label">Author</label>
+                                <input name="meta_author" id="meta_author" class="form-control"
+                                    value="{{ $companySeo->meta_author }}" />
+                                @error('meta_author')
+                                    <div class="form-text text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="meta_desc" class="form-label">Meta Description</label>
+                                <textarea name="meta_desc" id="meta_desc" cols="30" rows="10" class="form-control">{{ $companySeo->meta_desc }}</textarea>
+                                @error('meta_desc')
+                                    <div class="form-text text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="TagifyBasic" class="form-label">Meta Keywords</label>
+                                <input name="meta_keyword" id="TagifyBasic" class="form-control"
+                                    value="{{ $companySeo->meta_keyword }}" />
+                                @error('meta_keyword')
+                                    <div class="form-text text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="meta_og_thumb" class="form-label">OG Thumbnail</label>
+                                <img src="{{ asset($companySeo->meta_og_thumb) }}" alt=""
+                                    style="width: 150px;display:block" class="mb-1">
+                                <input class="form-control" type="file" id="meta_og_thumb" name="meta_og_thumb" />
+                                @error('meta_og_thumb')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary mx-4 mb-4">Submit</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+@endsection
+
+
+
+@section('style')
+    <link rel="stylesheet" href="{{ asset('/backend/admin/assets/vendor/libs/tagify/tagify.css') }}" />
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('/backend/admin/assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('/backend/admin/assets/js/forms-tagify.js') }}"></script>
+    <script src="{{ asset('/backend/admin/assets/summernote/popper.min.js') }}"></script>
+    <script src="{{ asset('/backend/admin/assets/summernote/bootstrap.min.js') }}"></script>
 @endsection

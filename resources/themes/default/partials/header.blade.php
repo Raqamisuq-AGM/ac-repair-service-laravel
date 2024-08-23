@@ -1,9 +1,13 @@
+@php
+    $systemLogo = App\Models\SystemImage::where('type', 'logo')->first();
+    $systemShortInfo = App\Models\SystemShortInfo::where('id', '1')->first();
+@endphp
 <header class="main-header header-style-two">
     <div class="header-lower">
         <div class="main-box">
             <div class="logo-box">
-                <div class="logo">
-                    <a href="/"><img src="{{ asset('/uploads/img/logo3.png') }}" alt title="Oitech" /></a>
+                <div class="logo" style="max-width: 165px;">
+                    <a href="/"><img src="{{ asset($systemLogo->file) }}" alt title="Oitech" /></a>
                 </div>
             </div>
 
@@ -34,10 +38,10 @@
                 </nav>
 
                 <div class="outer-box">
-                    <a href="tel:+92(8800)9806" class="info-btn">
+                    <a href="tel:{{ $systemShortInfo->phone }}" class="info-btn">
                         <i class="icon fa fa-phone"></i>
                         <small>Call Anytime</small><br />
-                        +92 (8800) 9806
+                        {{ $systemShortInfo->phone }}
                     </a>
                     <a href="{{ route('contact') }}" class="theme-btn btn-style-one"><span class="btn-title">get
                             solution</span></a>
@@ -56,7 +60,7 @@
         <nav class="menu-box">
             <div class="upper-box">
                 <div class="nav-logo">
-                    <a href="index.html"><img src="{{ asset('/uploads/img/logo-2.png') }}" alt title /></a>
+                    <a href="index.html"><img src="{{ asset($systemLogo->file) }}" alt title /></a>
                 </div>
                 <div class="close-btn"><i class="icon fa fa-times"></i></div>
             </div>
@@ -66,61 +70,25 @@
                     <div class="contact-info-box">
                         <i class="icon lnr-icon-phone-handset"></i>
                         <span class="title">Call Now</span>
-                        <a href="tel:+012-345-6789">+012-345-6789</a>
+                        <a href="tel:{{ $systemShortInfo->phone }}">{{ $systemShortInfo->phone }}</a>
                     </div>
                 </li>
                 <li>
                     <div class="contact-info-box">
                         <span class="icon lnr-icon-envelope1"></span>
                         <span class="title">Send Email</span>
-                        <a href="#"><span>example@gmail.com</span></a>
+                        <a href="#"><span>{{$systemShortInfo->email}}</span></a>
                     </div>
-                </li>
-                <li>
-                    <div class="contact-info-box">
-                        <span class="icon lnr-icon-clock"></span>
-                        <span class="title">Opening Hour</span>
-                        Mon - Sat 8:00 - 6:30, Sunday - CLOSED
-                    </div>
-                </li>
-            </ul>
-            <ul class="social-links">
-                <li>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fab fa-pinterest"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
                 </li>
             </ul>
         </nav>
-    </div>
-
-    <div class="search-popup">
-        <span class="search-back-drop"></span>
-        <button class="close-search">
-            <span class="fa fa-times"></span>
-        </button>
-        <div class="search-inner">
-            <form method="post" action="https://html.kodesolution.com/2023/cooltech-html/index.html">
-                <div class="form-group">
-                    <input type="search" name="search-field" value placeholder="Search..." required />
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </div>
-            </form>
-        </div>
     </div>
 
     <div class="sticky-header">
         <div class="auto-container">
             <div class="inner-container">
                 <div class="logo">
-                    <a href="{{ route('home') }}" title><img src="{{ asset('/uploads/img/logo3.png') }}" /></a>
+                    <a href="{{ route('home') }}" title><img src="{{ asset($systemLogo->file) }}" /></a>
                 </div>
 
                 <div class="nav-outer">

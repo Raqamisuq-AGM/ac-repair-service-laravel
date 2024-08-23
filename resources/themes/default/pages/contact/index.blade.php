@@ -1,17 +1,27 @@
+@php
+    $dataArray = json_decode($systemSeo->meta_keyword);
+@endphp
+
 @extends(themeView('partials.layout'))
 
 @section('title')
-    {{ 'Contact us' }}
+    {{ 'Contact | ' }}{{ $systemSeo->meta_title }}
 @endsection
 @section('description')
-    {{ 'description' }}
+    {{ $systemSeo->meta_desc }}
 @endsection
 @section('keywords')
-    {{ 'keywords' }}
+    @foreach ($dataArray as $index => $item)
+        {{ $item->value }}@if (!$loop->last)
+            ,
+        @endif
+    @endforeach
 @endsection
 @section('og_image')
+    {{ $systemSeo->meta_og_thumb }}
 @endsection
 @section('twitter_image')
+    {{ $systemSeo->meta_og_thumb }}
 @endsection
 
 @section('content')
@@ -35,11 +45,6 @@
                         <div class="sec-title">
                             <span class="sub-title">Need any help?</span>
                             <h2>Get in touch with us</h2>
-                            <div class="text">
-                                Lorem ipsum is simply free text available dolor sit amet,
-                                consectetur notted adipisicing elit sed do eiusmod tempor
-                                incididunt simply free ut labore et dolore magna aliqua.
-                            </div>
                         </div>
                         <ul class="list-unstyled contact-details__info">
                             <li>
@@ -48,7 +53,7 @@
                                 </div>
                                 <div class="text">
                                     <h6>Have any question?</h6>
-                                    <a href="tel:980089850"><span>Free</span> +92 (020)-9850</a>
+                                    <a href="tel:{{ $systemInfo->phone }}"><span>Free</span> {{ $systemInfo->phone }}</a>
                                 </div>
                             </li>
                             <li>
@@ -57,10 +62,7 @@
                                 </div>
                                 <div class="text">
                                     <h6>Write email</h6>
-                                    <a
-                                        href="https://html.kodesolution.com/cdn-cgi/l/email-protection#48262d2d2c202d2438082b272538292631662b2725"><span
-                                            class="__cf_email__"
-                                            data-cfemail="503e35353438353c2010333f3d20313e297e333f3d">[email&#160;protected]</span></a>
+                                    <a href="#"><span>{{ $systemInfo->email }}</span></a>
                                 </div>
                             </li>
                             <li>
@@ -69,7 +71,7 @@
                                 </div>
                                 <div class="text">
                                     <h6>Visit anytime</h6>
-                                    <span>66 broklyn golden street. New York</span>
+                                    <span>{{ $systemInfo->address }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -81,19 +83,20 @@
                         <h2>Feel free to write</h2>
                     </div>
 
-                    <form id="contact_form" name="contact_form" class
-                        action="https://html.kodesolution.com/2023/cooltech-html/includes/sendmail.php" method="post">
+                    <form id="contact_form" name="contact_form" class action="{{ route('contact.submit') }}"
+                        method="post">
+                        @csrf
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label>Name <small>*</small></label>
-                                    <input name="form_name" class="form-control" type="text" placeholder="Enter Name" />
+                                    <input name="name" class="form-control" type="text" placeholder="Enter Name" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label>Email <small>*</small></label>
-                                    <input name="form_email" class="form-control required email" type="email"
+                                    <input name="email" class="form-control required email" type="email"
                                         placeholder="Enter Email" />
                                 </div>
                             </div>
@@ -102,21 +105,20 @@
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label>Subject <small>*</small></label>
-                                    <input name="form_subject" class="form-control required" type="text"
+                                    <input name="subject" class="form-control required" type="text"
                                         placeholder="Enter Subject" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label>Phone</label>
-                                    <input name="form_phone" class="form-control" type="text"
-                                        placeholder="Enter Phone" />
+                                    <input name="phone" class="form-control" type="text" placeholder="Enter Phone" />
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label>Message</label>
-                            <textarea name="form_message" class="form-control required" rows="5" placeholder="Enter Message"></textarea>
+                            <textarea name="message" class="form-control required" rows="5" placeholder="Enter Message"></textarea>
                         </div>
                         <div class="mb-3">
                             <input name="form_botcheck" class="form-control" type="hidden" value />

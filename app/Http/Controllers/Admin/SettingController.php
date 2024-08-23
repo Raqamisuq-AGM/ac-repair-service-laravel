@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CustomCode;
 use App\Models\SystemImage;
+use App\Models\SystemSeo;
 use App\Models\SystemShortInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -108,13 +109,14 @@ class SettingController extends Controller
     public function company()
     {
         $company = SystemShortInfo::find(1);
+        $companySeo = SystemSeo::find(1);
         $systemLogo = SystemImage::where('type', 'logo')->first();
         $systemFavicon = SystemImage::where('type', 'favicon')->first();
         if ($company == null) {
             toastr()->warning('Item not found');
             return redirect()->back();
         }
-        return view('pages.settings.company', compact('company', 'systemLogo', 'systemFavicon'));
+        return view('pages.settings.company', compact('company', 'systemLogo', 'systemFavicon', 'companySeo'));
     }
 
     //company update method
@@ -127,6 +129,11 @@ class SettingController extends Controller
             'whatsapp' => 'required',
             'phone' => 'required',
             'address' => 'required',
+            'meta_title' => 'required',
+            'meta_keyword' => 'required',
+            'meta_desc' => 'required',
+            'meta_author' => 'required',
+            // 'meta_og_thumb' => 'required',
         ]);
 
         $company = SystemShortInfo::find(1);
@@ -142,6 +149,13 @@ class SettingController extends Controller
         $company->phone = $request->input('phone');
         $company->address = $request->input('address');
         $company->save();
+
+        $companySeo = SystemSeo::find(1);
+        $companySeo->meta_title = $request->input('meta_title');
+        $companySeo->meta_keyword = $request->input('meta_keyword');
+        $companySeo->meta_desc = $request->input('meta_desc');
+        $companySeo->meta_author = $request->input('meta_author');
+        $companySeo->save();
 
         // Handle file uploads
         if ($request->hasFile('logo')) {
@@ -172,6 +186,16 @@ class SettingController extends Controller
             $imgFavicon->save($faviconDestination . '/' . $input['faviconImg'], 70);
             $systemFavicon->file = 'uploads/img/' . $input['faviconImg'];
             $systemFavicon->save();
+        }
+
+        if ($request->hasFile('meta_og_thumb')) {
+            $systemSeoImg = $request->meta_og_thumb;
+            $input['systemSeoImg'] = time() . '.' . $systemSeoImg->getClientOriginalExtension();
+            $systemSeoDestination = public_path('uploads/img');
+            $seoImg = Image::make($systemSeoImg->getRealPath());
+            $seoImg->save($systemSeoDestination . '/' . $input['systemSeoImg'], 70);
+            $companySeo->file = 'uploads/img/' . $input['systemSeoImg'];
+            $companySeo->save();
         }
 
         toastr()->success('Company info updated successfully');

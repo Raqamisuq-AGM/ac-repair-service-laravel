@@ -17,9 +17,11 @@ class SystemShotInfoSeeder extends Seeder
         $faker = Faker::create();
 
         SystemShortInfo::create([
+            'company_name' => "Lorem Ipsum",
+            'tagline' => "Lorem Ipsum",
             'email' => $faker->companyEmail,
             'phone' => $faker->phoneNumber,
-            'whatsapp' => $faker->phoneNumber, // Fake phone number for WhatsApp
+            'whatsapp' => $faker->phoneNumber,
             'address' => $faker->address,
         ]);
     }

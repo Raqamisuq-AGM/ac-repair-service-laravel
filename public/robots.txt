@@ -1,2 +1,14 @@
 User-agent: *
-Disallow:
+Disallow: /admin/
+
+Allow: /$
+Allow: /teams
+Allow: /team/*
+Allow: /services
+Allow: /service/*
+Allow: /blogs
+Allow: /blog/*
+Allow: /contact
+Allow: /faq
+
+Sitemap: https://raqamisuq.com/sitemap.xml
