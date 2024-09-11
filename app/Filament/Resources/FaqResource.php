@@ -71,6 +71,7 @@ class FaqResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Faq::query()->orderBy('id', 'desc'))
             ->columns([
                 TextColumn::make('ques')
                     ->label('Question')

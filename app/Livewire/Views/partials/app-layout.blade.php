@@ -1,3 +1,7 @@
+@php
+$customCode = App\Models\CustomHeaderFooterCode::first();
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -37,10 +41,10 @@
     <link href="{{ asset(theme_asset('css/bootstrap.min.css')) }}" rel="stylesheet" />
     <link href="{{ asset(theme_asset('css/style.css')) }}" rel="stylesheet" />
     <link href="{{ asset(theme_asset('css/responsive.css')) }}" rel="stylesheet" />
-
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @livewireStyles
     @yield('styles')
+    {!! $customCode->header_code !!}
 </head>
 
 <body>
@@ -67,6 +71,7 @@
     <script src="{{ asset(theme_asset('js/script.js')) }}"></script>
     @livewireScripts
     @yield('scripts')
+    {!! $customCode->footer_code !!}
 </body>
 
 </html>

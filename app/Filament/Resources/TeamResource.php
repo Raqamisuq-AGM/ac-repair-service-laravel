@@ -119,6 +119,7 @@ class TeamResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Team::query()->orderBy('id', 'desc'))
             ->columns([
                 ImageColumn::make('photo')
                     ->label('Avatar'),

@@ -75,20 +75,21 @@ class ExtrasPage extends Page
 
     public function generateSitemap(): void
     {
-        $sitemap = Sitemap::create()->add(Url::create('/'));
-
         // Fetch only active blogs and services
-        $blogs = Blog::where('status', 1)->get();
+        // $blogs = Blog::where('status', 1)->get();
         $services = Service::where('status', 1)->get();
 
         // Initialize sitemap and add root URL
         $sitemap = Sitemap::create()
-            ->add(Url::create('/'));
+            ->add(Url::create('/'))
+            ->add(Url::create('/service'))
+            ->add(Url::create('/contact'))
+            ->add(Url::create('/about'));
 
         // Add active blogs to sitemap
-        $blogs->each(function (Blog $blog) use ($sitemap) {
-            $sitemap->add(Url::create("/blog/{$blog->slug}"));
-        });
+        // $blogs->each(function (Blog $blog) use ($sitemap) {
+        //     $sitemap->add(Url::create("/blog/{$blog->slug}"));
+        // });
 
         // Add active services to sitemap
         $services->each(function (Service $service) use ($sitemap) {

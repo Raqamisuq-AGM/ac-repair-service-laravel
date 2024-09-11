@@ -13,6 +13,8 @@ class LatestTraffics extends BaseWidget
 {
     protected int | string | array $columnSpan = 'full';
 
+    protected static ?string $pollingInterval = '10s';
+
     public function table(Table $table): Table
     {
         return $table
@@ -30,9 +32,9 @@ class LatestTraffics extends BaseWidget
                 TextColumn::make('city')
                     ->label('City')
                     ->searchable(),
-                TextColumn::make('state')
-                    ->label('State')
-                    ->searchable(),
+                // TextColumn::make('state')
+                //     ->label('State')
+                //     ->searchable(),
                 TextColumn::make('zip_code')
                     ->label('Zip Code')
                     ->searchable(),

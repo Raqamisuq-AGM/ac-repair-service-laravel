@@ -36,6 +36,7 @@ class UserTrafficResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(UserTraffic::query()->orderBy('id', 'desc'))
             ->recordAction(null)
             ->recordUrl(null)
             ->columns([
@@ -51,9 +52,9 @@ class UserTrafficResource extends Resource
                 TextColumn::make('city')
                     ->label('City')
                     ->searchable(),
-                TextColumn::make('state')
-                    ->label('State')
-                    ->searchable(),
+                // TextColumn::make('state')
+                //     ->label('State')
+                //     ->searchable(),
                 TextColumn::make('zip_code')
                     ->label('Zip Code')
                     ->searchable(),

@@ -7,4 +7,5 @@ return [
     App\Providers\RqServiceProvider::class,
     App\Providers\ThemeServiceProvider::class,
     App\Providers\ViewServiceProvider::class,
+    Jenssegers\Agent\AgentServiceProvider::class,
 ];

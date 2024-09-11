@@ -12,12 +12,14 @@
         "aymanalhattami/filament-slim-scrollbar": "^2.0",
         "cviebrock/eloquent-sluggable": "^11.0",
         "filament/filament": "^3.2",
+        "jenssegers/agent": "^2.6",
         "joshembling/image-optimizer": "^1.4",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "pxlrbt/filament-spotlight": "^1.2",
         "spatie/laravel-sitemap": "^7.2",
+        "stevebauman/location": "^7.3",
         "yoeunes/toastr": "^3.0"
     },
     "require-dev": {
