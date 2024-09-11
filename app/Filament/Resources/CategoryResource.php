@@ -46,6 +46,7 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Category::query()->orderBy('id', 'desc'))
             ->columns([
                 TextColumn::make('name')
                     ->label('Category')

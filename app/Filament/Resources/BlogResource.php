@@ -36,7 +36,7 @@ class BlogResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-bold';
 
     protected static ?int $navigationSort = 4;
-    
+
     protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
@@ -115,6 +115,7 @@ class BlogResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Blog::query()->orderBy('id', 'desc'))
             ->columns([
                 ImageColumn::make('thumbnail')
                     ->label('Thumbnail'),

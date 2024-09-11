@@ -122,6 +122,7 @@ class EmailGatewayResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(EmailGateway::query()->orderBy('id', 'desc'))
             ->columns([
                 ImageColumn::make('thumbnail')
                     ->label('Thumbnail'),

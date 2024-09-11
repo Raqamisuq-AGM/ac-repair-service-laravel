@@ -105,6 +105,7 @@ class ServiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Service::query()->orderBy('id', 'desc'))
             ->columns([
                 ImageColumn::make('thumbnail')
                     ->label('Thumbnail'),
