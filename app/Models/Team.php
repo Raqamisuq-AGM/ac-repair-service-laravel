@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class Team extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory;
+
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
 
     protected $fillable = [
         'name',
+        'slug',
         'position',
         'photo',
         'description',
@@ -19,31 +22,18 @@ class Team extends Model
         'twitter',
         'instagram',
         'whatsapp',
+        'status',
     ];
 
-    // Accessor for status
-    // public function getStatusAttribute($value)
-    // {
-    //     $status = [
-    //         0 => 'inactive',
-    //         1 => 'active',
-    //         2 => 'deleted',
-    //     ];
-
-    //     return $status[$value];
-    // }
-
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
-    public function sluggable(): array
+    public function getStatusNameAttribute(): string
     {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
+        switch ($this->attributes['status']) {
+            case self::STATUS_INACTIVE:
+                return 'Inactive';
+            case self::STATUS_ACTIVE:
+                return 'Active';
+            default:
+                return 'Unknown';
+        }
     }
 }

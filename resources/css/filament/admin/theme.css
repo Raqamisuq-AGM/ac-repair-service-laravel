@@ -1,0 +1,47 @@
+@import "/vendor/filament/filament/resources/css/theme.css";
+
+@config 'tailwind.config.js';
+
+@layer components {
+    .fi-sidebar {
+        @apply !bg-white dark:!bg-[#2b2c40];
+    }
+
+    .fi-logo {
+        @apply !h-[50px];
+    }
+
+    .fi-sidebar-nav-groups {
+        @apply !gap-y-1;
+    }
+
+    .fi-topbar nav {
+        @apply !bg-white dark:!bg-[#2b2c40];
+    }
+
+    .fi-sidebar-header {
+        @apply !bg-white dark:!bg-[#2b2c40];
+    }
+
+    .fi-card {
+        @apply !bg-white dark:!bg-[#2b2c40];
+    }
+
+    .fi-section-content-ctn {
+        @apply !bg-white dark:!bg-[#2b2c40];
+        @apply rounded-xl;
+        @apply border-none;
+    }
+
+    .fi-main {
+        @apply !bg-slate-200 dark:!bg-[#232333];
+    }
+
+    .fi-layout {
+        @apply !bg-slate-200 dark:!bg-[#232333];
+    }
+
+    .fi-input-wrp {
+        @apply focus-within:!ring-indigo-500 dark:focus-within:!ring-indigo-500 focus-within:!ring-1 dark:focus-within:!ring-1;
+    }
+}

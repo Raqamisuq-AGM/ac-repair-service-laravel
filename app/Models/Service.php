@@ -10,38 +10,29 @@ class Service extends Model
 {
     use HasFactory, Sluggable;
 
+    const STATUS_UNPUBLISHED = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_DELETED = 2;
+
     protected $fillable = [
         'title',
         'slug',
-        'short_title',
-        'icon',
-        'short_icon',
-        'position',
-        'cover_photo',
-        'desc',
-        'short_desc',
+        'short_description',
+        'thumbnail',
+        'content',
         'category',
         'sub_category',
-        'tags',
+        'status',
         'meta_title',
-        'meta_keyword',
-        'meta_desc',
-        'meta_author',
+        'meta_description',
         'meta_tags',
-        'meta_og_thumb',
-        'status'
     ];
 
-    // Accessor for status
-    public function getStatusAttribute($value)
+    protected function casts(): array
     {
-        $status = [
-            0 => 'inactive',
-            1 => 'active',
-            2 => 'deleted',
+        return [
+            'meta_tags' => 'array',
         ];
-
-        return $status[$value];
     }
 
     /**
@@ -56,5 +47,24 @@ class Service extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    /**
+     * Get the human-readable status name.
+     *
+     * @return string
+     */
+    public function getStatusNameAttribute(): string
+    {
+        switch ($this->attributes['status']) {
+            case self::STATUS_PUBLISHED:
+                return 'Published';
+            case self::STATUS_UNPUBLISHED:
+                return 'Unpublished';
+            case self::STATUS_DELETED:
+                return 'Deleted';
+            default:
+                return 'Unknown';
+        }
     }
 }
