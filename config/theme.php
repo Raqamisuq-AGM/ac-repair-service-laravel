@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'view' => 'default',
+    'name' => 'default',
     'asset' => 'default',
+    'view' => 'default',
 ];

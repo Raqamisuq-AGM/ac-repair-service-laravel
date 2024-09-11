@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Theme;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ThemeSeeder extends Seeder
 {
@@ -13,13 +13,18 @@ class ThemeSeeder extends Seeder
      */
     public function run(): void
     {
-        //Create default themes for admin and frontend
-        Theme::create([
-            'name' => 'default',
-            'type' => 'personal',
-            'thumb' => 'theme_name.jpg',
-            'status' => '1',
-            'verified' => '1',
+        DB::table('themes')->insert([
+            [
+                'name' => 'Default',
+                'thumbnail' => 'thumbnail.jpg',
+                'short_desc' => 'This is the default theme for the application.',
+                'raqamisuq_email' => 'default@themes.com',
+                'raqamisuq_license_code' => 'LIC12345DEF',
+                'status' => 1,
+                'verified' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

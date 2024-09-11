@@ -10,13 +10,14 @@ class UserTraffic extends Model
     use HasFactory;
 
     protected $fillable = [
+        'visited_page',
         'ip',
+        'country',
+        'city',
+        'state',
+        'zip_code',
         'platform',
         'device',
         'browser',
-        'city',
-        'country',
-        'country_code',
-        'zip_code',
     ];
 }

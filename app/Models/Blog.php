@@ -10,38 +10,29 @@ class Blog extends Model
 {
     use HasFactory, Sluggable;
 
+    const STATUS_UNPUBLISHED = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_DELETED = 2;
+
     protected $fillable = [
         'title',
-        'short_title',
-        'icon',
-        'short_icon',
-        'position',
-        'cover_photo',
-        'desc',
-        'short_desc',
+        'slug',
+        'short_description',
+        'thumbnail',
+        'content',
         'category',
         'sub_category',
-        'tags',
+        'stauts',
         'meta_title',
-        'meta_keyword',
-        'meta_desc',
-        'meta_author',
+        'meta_description',
         'meta_tags',
-        'meta_og_thumb',
-        'status'
     ];
 
-    // Accessor for status
-    public function getStatusAttribute($value)
-    {
-        $status = [
-            0 => 'inactive',
-            1 => 'active',
-            2 => 'deleted',
-        ];
 
-        return $status[$value];
-    }
+
+    protected $casts = [
+        'meta_tags' => 'array',
+    ];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -55,5 +46,19 @@ class Blog extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function getStatusNameAttribute(): string
+    {
+        switch ($this->attributes['status']) {
+            case self::STATUS_PUBLISHED:
+                return 'Published';
+            case self::STATUS_UNPUBLISHED:
+                return 'Unpublished';
+            case self::STATUS_DELETED:
+                return 'Deleted';
+            default:
+                return 'Unknown';
+        }
     }
 }
