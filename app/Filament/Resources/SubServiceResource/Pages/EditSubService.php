@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\ServiceResource\Pages;
+namespace App\Filament\Resources\SubServiceResource\Pages;
 
-use App\Filament\Resources\ServiceResource;
+use App\Filament\Resources\SubServiceResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditService extends EditRecord
+class EditSubService extends EditRecord
 {
-    protected static string $resource = ServiceResource::class;
+    protected static string $resource = SubServiceResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -19,6 +19,6 @@ class EditService extends EditRecord
 
     protected function getSavedNotificationTitle(): ?string
     {
-        return 'Service Updated Successfully';
+        return 'Sub Service Updated Successfully';
     }
 }

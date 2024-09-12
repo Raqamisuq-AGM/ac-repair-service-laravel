@@ -64,6 +64,7 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Orange,
             ])
             ->navigationGroups([
+                'Services',
                 'Mail',
                 'Gateways',
                 'Create Users',

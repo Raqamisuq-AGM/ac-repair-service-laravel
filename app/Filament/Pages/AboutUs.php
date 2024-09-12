@@ -25,6 +25,7 @@ use Filament\Forms\Set;
 use Illuminate\Validation\Rule;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 
 class AboutUs extends Page
 {
@@ -54,8 +55,9 @@ class AboutUs extends Page
             ->schema([
                 Section::make('About Us')
                     ->schema([
-                        MarkdownEditor::make('content')
+                        RichEditor::make('content')
                             ->label('About Us Content')
+                            ->fileAttachmentsDirectory('uploads/img')
                             ->columnSpan(2)
                             ->validationAttribute('content'),
                     ])->columns(2),
