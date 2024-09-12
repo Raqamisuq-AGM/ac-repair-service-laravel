@@ -67,4 +67,9 @@ class Service extends Model
                 return 'Unknown';
         }
     }
+
+    public function subServices()
+    {
+        return $this->hasMany(SubService::class);
+    }
 }

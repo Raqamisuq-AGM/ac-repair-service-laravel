@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ServiceResource\Pages;
-use App\Filament\Resources\ServiceResource\RelationManagers;
+use App\Filament\Resources\SubServiceResource\Pages;
+use App\Filament\Resources\SubServiceResource\RelationManagers;
+use App\Models\SubService;
 use App\Models\Category;
 use App\Models\Service;
 use App\Models\SubCategory;
@@ -31,32 +32,27 @@ use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\RichEditor;
 
-class ServiceResource extends Resource
+class SubServiceResource extends Resource
 {
-    protected static ?string $model = Service::class;
+    protected static ?string $model = SubService::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
+    protected static ?string $navigationIcon = 'heroicon-o-bars-3-bottom-left';
 
     protected static ?string $navigationGroup = 'Services';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Basic')
+                Section::make('Media & Content')
                     ->schema([
-                        Select::make('status')
-                            ->options([
-                                0 => 'Unpublished',
-                                1 => 'Published',
-                            ])
+                        Select::make('service_id')
+                            ->label('Select Parent Service')
+                            ->options(Service::all()->pluck('title', 'id'))
                             ->required()
-                            ->label('Status')
-                            ->columnSpan(2)
-                            ->default(1)
-                            ->validationAttribute('status'),
+                            ->searchable(),
                         TextInput::make('title')
                             ->required()
                             ->label('Title')
@@ -72,40 +68,11 @@ class ServiceResource extends Resource
                             ->label('Slug')
                             ->unique(ignoreRecord: true, table: Service::class)
                             ->validationAttribute('slug'),
-                        Textarea::make('short_description')
-                            ->label('Short Description')
-                            ->required()
-                            ->columnSpan(2)
-                            ->validationAttribute('short description'),
-                    ])->columns(2),
-                Section::make('Media & Content')
-                    ->schema([
-                        FileUpload::make('thumbnail')
-                            ->disk('public')
-                            ->directory('uploads/img'),
                         RichEditor::make('content')
                             ->required()
                             ->columnSpan(1)
                             ->fileAttachmentsDirectory('uploads/img')
                             ->validationAttribute('content'),
-                    ])->columns(1),
-                Section::make('Meta SEO')
-                    ->schema([
-                        TextInput::make('meta_title')
-                            ->required()
-                            ->label('Meta Title')
-                            ->validationAttribute('meta title'),
-                        Textarea::make('meta_description')
-                            ->label('Meta Description')
-                            ->required()
-                            ->columnSpan(1)
-                            ->validationAttribute('meta description'),
-                        TagsInput::make('meta_tags')
-                            ->label('Meta Keywords')
-                            ->separator(',')
-                            ->reorderable()
-                            ->required()
-                            ->validationAttribute('keywords'),
                     ])->columns(1),
             ]);
     }
@@ -113,35 +80,29 @@ class ServiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Service::query()->orderBy('id', 'desc'))
+            ->query(SubService::query()->orderBy('service_id')->orderBy('id', 'desc'))
             ->columns([
-                ImageColumn::make('thumbnail')
-                    ->label('Thumbnail'),
+                TextColumn::make('service.title')
+                    ->label('Parent Service')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('title')
                     ->label('Title')
                     ->searchable()
                     ->sortable(),
-                CheckboxColumn::make('status')
-                    ->label('Published')
-                    ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('status')
-                    ->multiple()
-                    ->options([
-                        0 => 'Unpublished',
-                        1 => 'Published',
-                    ])
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
-                    ->successNotificationTitle('Service Deleted Successfully'),
+                    ->successNotificationTitle('Sub Service Deleted Successfully'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->successNotificationTitle('Services Deleted Successfully'),
+                        ->successNotificationTitle('Sub Services Deleted Successfully'),
                 ]),
             ]);
     }
@@ -156,14 +117,14 @@ class ServiceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListServices::route('/'),
-            'create' => Pages\CreateService::route('/create'),
-            'edit' => Pages\EditService::route('/{record}/edit'),
+            'index' => Pages\ListSubServices::route('/'),
+            'create' => Pages\CreateSubService::route('/create'),
+            'edit' => Pages\EditSubService::route('/{record}/edit'),
         ];
     }
 
     public static function getNavigationBadge(): ?string
     {
-        return Service::where('status', 1)->count();
+        return SubService::count();
     }
 }

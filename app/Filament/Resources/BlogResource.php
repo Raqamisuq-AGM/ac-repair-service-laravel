@@ -28,6 +28,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Forms\Components\RichEditor;
 
 class BlogResource extends Resource
 {
@@ -88,7 +89,7 @@ class BlogResource extends Resource
                 Section::make('Media & Content')
                     ->schema([
                         FileUpload::make('thumbnail')->disk('public')->directory('uploads/img'),
-                        MarkdownEditor::make('content')->required()->columnSpan(1)
+                        RichEditor::make('content')->required()->columnSpan(1)
                             ->validationAttribute('content'),
                     ])->columns(1),
                 Section::make('Meta SEO')
