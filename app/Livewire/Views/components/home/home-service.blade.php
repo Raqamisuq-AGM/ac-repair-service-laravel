@@ -21,7 +21,7 @@
                             <a href="{{ route('service.details', ['slug' => $service->slug]) }}" wire:navigate
                                 style="color: inherit;
                                                     overflow: hidden;
-                                                    -webkit-line-clamp: 2;
+                                                    -webkit-line-clamp: 1;
                                                     display: box;
                                                     display: -webkit-box;
                                                     -webkit-box-orient: vertical;
