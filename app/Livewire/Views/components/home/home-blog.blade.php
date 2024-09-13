@@ -16,7 +16,7 @@
                     <div class="image-box">
                         <figure class="image">
                             <a href="{{ route('blog.details', ['slug' => $blog->slug]) }}" wire:navigate>
-                                <img src="{{ asset('storage/'.$blog->thumbnail) }}" alt />
+                                <img src="{{ asset('storage/'.$blog->thumbnail) }}" alt="" />
                             </a>
                         </figure>
                         @php

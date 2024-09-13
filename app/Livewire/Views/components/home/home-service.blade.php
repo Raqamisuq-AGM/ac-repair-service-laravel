@@ -36,7 +36,7 @@
                     </div>
                     <div class="image-box">
                         <figure class="image overlay-anim">
-                            <img src="{{ asset('storage/'.$service->thumbnail) }}" alt />
+                            <img src="{{ asset('storage/'.$service->thumbnail) }}" alt="{{$service->title}}" style="width:265px;height:190px" />
                         </figure>
                     </div>
                 </div>

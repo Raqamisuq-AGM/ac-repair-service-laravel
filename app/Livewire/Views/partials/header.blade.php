@@ -3,7 +3,7 @@
         <div class="main-box">
             <div class="logo-box">
                 <div class="logo" style="max-width: 165px;">
-                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt="" /></a>
+                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt="logo" /></a>
                 </div>
             </div>
 
@@ -13,8 +13,26 @@
                         <li class="{{ request()->routeIs('index') ? 'current' : '' }}">
                             <a href="{{ route('index') }}" wire:navigate>Home</a>
                         </li>
-                        <li class="{{ request()->routeIs('service', 'service.details') ? 'current' : '' }}">
+                        <li class="dropdown {{ request()->routeIs('service', 'service.details','service.sub.service.details') ? 'current' : '' }}">
                             <a href="{{ route('service') }}" wire:navigate>Services</a>
+                            <ul>
+                                @foreach($services as $service)
+                                <li class="dropdown">
+                                    <a href="{{ route('service.details', ['slug' => $service->slug]) }}" wire:navigate>{{ $service->title }}</a>
+                                    @if($service->subServices->isNotEmpty())
+                                    <ul>
+                                        @foreach($service->subServices as $subService)
+                                        <li>
+                                            <a href="{{ route('service.sub.service.details', ['slug' => $service->slug,'subServiceSlug' => $subService->slug]) }}" wire:navigate>
+                                                {{ $subService->title }}
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                    @endif
+                                </li>
+                                @endforeach
+                            </ul>
                         </li>
                         <li class="{{ request()->routeIs('about') ? 'current' : '' }}">
                             <a href="{{ route('about') }}" wire:navigate>About Us</a>
@@ -53,7 +71,7 @@
         <nav class="menu-box">
             <div class="upper-box">
                 <div class="nav-logo">
-                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt title /></a>
+                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt="logo" /></a>
                 </div>
                 <div class="close-btn"><i class="icon fa fa-times"></i></div>
             </div>

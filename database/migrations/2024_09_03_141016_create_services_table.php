@@ -26,8 +26,8 @@ return new class extends Migration
                 3 = deleted,
                 '
             );
-            $table->string('meta_title')->nullable();
-            $table->string('meta_description')->nullable();
+            $table->longText('meta_title')->nullable();
+            $table->longText('meta_description')->nullable();
             $table->longText('meta_tags')->nullable();
             $table->timestamps();
         });

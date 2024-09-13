@@ -20,10 +20,10 @@
     <section class="page-title" style="background-image: url({{ asset('/uploads/img/page-title.jpg') }})">
         <div class="auto-container">
             <div class="title-outer">
-                <h1 class="title">{{$service->title}}</h1>
+                <h1 class="title">{{$parentService->title}}</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="{{ route('index') }}" wire:navigate>Home</a></li>
-                    <li><a href="{{ route('service') }}" wire:navigate>Services</a></li>
+                    <li><a href="{{ route('service.details', ['slug'=> $parentService->slug]) }}" wire:navigate>{{$parentService->title}}</a></li>
                     <li>{{$service->title}}</li>
                 </ul>
             </div>
@@ -52,7 +52,7 @@
                                 @foreach ($otherServices as $otherService)
                                 <li>
                                     <div class="sidebar__post-image" style="width: 70px; height:45px">
-                                        <img src="{{asset('storage/'.$otherService->thumbnail)}}" alt />
+                                        <img src="{{asset('storage/'.$otherService->thumbnail)}}" alt="{{$otherService->title}}" />
                                     </div>
                                     <div class="sidebar__post-content">
                                         <h3>

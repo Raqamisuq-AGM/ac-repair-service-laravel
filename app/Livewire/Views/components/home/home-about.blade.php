@@ -6,10 +6,10 @@
                 <div class="inner-column wow fadeInLeft">
                     <figure class="image-1 overlay-anim wow fadeInUp">
                         <div class="animated-circle bounce-x"></div>
-                        <img src="{{ asset('/uploads/img/about1-1.jpg') }}" alt />
+                        <img src="{{ asset('/uploads/img/about1-1.jpg') }}" alt="" />
                     </figure>
                     <figure class="image-2 overlay-anim wow fadeInUp">
-                        <img src="images/resource/about1-2.jpg" alt />
+                        <img src="images/resource/about1-2.jpg" alt="" />
                     </figure>
                 </div>
             </div>

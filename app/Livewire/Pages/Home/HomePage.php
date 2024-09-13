@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages\Home;
 
+use App\Models\Service;
 use App\Models\UserTraffic;
 use Livewire\Component;
 use Stevebauman\Location\Facades\Location;

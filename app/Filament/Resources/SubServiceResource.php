@@ -74,6 +74,35 @@ class SubServiceResource extends Resource
                             ->fileAttachmentsDirectory('uploads/img')
                             ->validationAttribute('content'),
                     ])->columns(1),
+                Section::make('Media & Content')
+                    ->schema([
+                        FileUpload::make('thumbnail')
+                            ->disk('public')
+                            ->directory('uploads/img'),
+                        RichEditor::make('content')
+                            ->required()
+                            ->columnSpan(1)
+                            ->fileAttachmentsDirectory('uploads/img')
+                            ->validationAttribute('content'),
+                    ])->columns(1),
+                Section::make('Meta SEO')
+                    ->schema([
+                        TextInput::make('meta_title')
+                            ->required()
+                            ->label('Meta Title')
+                            ->validationAttribute('meta title'),
+                        Textarea::make('meta_description')
+                            ->label('Meta Description')
+                            ->required()
+                            ->columnSpan(1)
+                            ->validationAttribute('meta description'),
+                        TagsInput::make('meta_tags')
+                            ->label('Meta Keywords')
+                            ->separator(',')
+                            ->reorderable()
+                            ->required()
+                            ->validationAttribute('keywords'),
+                    ])->columns(1),
             ]);
     }
 
@@ -82,6 +111,9 @@ class SubServiceResource extends Resource
         return $table
             ->query(SubService::query()->orderBy('service_id')->orderBy('id', 'desc'))
             ->columns([
+                ImageColumn::make('thumbnail')
+                    ->label('Thumbnail')
+                    ->placeholder('N/A'),
                 TextColumn::make('service.title')
                     ->label('Parent Service')
                     ->searchable()
