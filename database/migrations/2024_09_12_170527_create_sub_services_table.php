@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
             $table->longText('content')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->longText('meta_title')->nullable();
+            $table->longText('meta_description')->nullable();
+            $table->longText('meta_tags')->nullable();
             $table->foreign('service_id')
                 ->references('id')
                 ->on('services')

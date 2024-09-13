@@ -15,6 +15,10 @@ class SubService extends Model
         'title',
         'slug',
         'content',
+        'thumbnail',
+        'meta_title',
+        'meta_description',
+        'meta_tags',
     ];
 
     /**

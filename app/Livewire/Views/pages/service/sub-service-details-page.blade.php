@@ -20,10 +20,10 @@
     <section class="page-title" style="background-image: url({{ asset('/uploads/img/page-title.jpg') }})">
         <div class="auto-container">
             <div class="title-outer">
-                <h1 class="title">Services</h1>
+                <h1 class="title">{{$parentService->title}}</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="{{ route('index') }}" wire:navigate>Home</a></li>
-                    <li><a href="{{ route('service') }}" wire:navigate>Services</a></li>
+                    <li><a href="{{ route('service.details', ['slug'=> $parentService->slug]) }}" wire:navigate>{{$parentService->title}}</a></li>
                     <li>{{$service->title}}</li>
                 </ul>
             </div>

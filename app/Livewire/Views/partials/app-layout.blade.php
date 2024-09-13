@@ -41,7 +41,6 @@ $customCode = App\Models\CustomHeaderFooterCode::first();
     <link href="{{ asset(theme_asset('css/bootstrap.min.css')) }}" rel="stylesheet" />
     <link href="{{ asset(theme_asset('css/style.css')) }}" rel="stylesheet" />
     <link href="{{ asset(theme_asset('css/responsive.css')) }}" rel="stylesheet" />
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @livewireStyles
     @yield('styles')
     {!! $customCode->header_code !!}

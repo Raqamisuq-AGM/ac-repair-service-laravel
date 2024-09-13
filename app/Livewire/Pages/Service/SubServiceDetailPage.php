@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Livewire\Components\Service;
+namespace App\Livewire\Pages\Service;
 
 use App\Models\Service;
-use App\Models\SystemInfo;
+use App\Models\SubService;
 use Livewire\Component;
 use Stevebauman\Location\Facades\Location;
 use Jenssegers\Agent\Agent;
 use App\Models\UserTraffic;
+use App\Models\SystemInfo;
 
-class ServiceDetail extends Component
+class SubServiceDetailPage extends Component
 {
     public $slug;
+    public $subServiceSlug;
 
-    public function mount($slug)
+    public function mount($slug, $subServiceSlug)
     {
         $this->slug = $slug;
+        $this->subServiceSlug = $subServiceSlug;
 
         // Determine the IP address
         if (config('app.env') === 'production') {
@@ -47,15 +50,12 @@ class ServiceDetail extends Component
         $userTraffic->save();
     }
 
-    public function placeholder()
-    {
-        return view('components.service.skeletonD');
-    }
 
     public function render()
     {
-        $service = Service::where('slug', $this->slug)->first();
+        $parentService = Service::where('slug', $this->slug)->first();
+        $service = SubService::where('slug', $this->subServiceSlug)->first();
         $systemInfo = SystemInfo::first();
-        return view('components.service.service-detail', compact('service', 'systemInfo'))->layout('partials.app-layout');
+        return view('pages.service.sub-service-details-page', compact('service', 'systemInfo', 'parentService'))->layout('partials.app-layout');
     }
 }
