@@ -66,7 +66,7 @@ class SubServiceResource extends Resource
                         TextInput::make('slug')
                             ->required()
                             ->label('Slug')
-                            ->unique(ignoreRecord: true, table: Service::class)
+                            ->unique(ignoreRecord: true, table: SubService::class)
                             ->validationAttribute('slug'),
                         RichEditor::make('content')
                             ->required()
@@ -79,11 +79,6 @@ class SubServiceResource extends Resource
                         FileUpload::make('thumbnail')
                             ->disk('public')
                             ->directory('uploads/img'),
-                        RichEditor::make('content')
-                            ->required()
-                            ->columnSpan(1)
-                            ->fileAttachmentsDirectory('uploads/img')
-                            ->validationAttribute('content'),
                     ])->columns(1),
                 Section::make('Meta SEO')
                     ->schema([
