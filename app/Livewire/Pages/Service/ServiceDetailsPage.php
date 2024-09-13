@@ -52,7 +52,8 @@ class ServiceDetailsPage extends Component
     public function render()
     {
         $service = Service::where('slug', $this->slug)->first();
+        $otherServices = Service::where('slug', '!=', $this->slug)->get();
         $systemInfo = SystemInfo::first();
-        return view('pages.service.service-details-page', compact('service', 'systemInfo'))->layout('partials.app-layout');
+        return view('pages.service.service-details-page', compact('service', 'systemInfo', 'otherServices'))->layout('partials.app-layout');
     }
 }

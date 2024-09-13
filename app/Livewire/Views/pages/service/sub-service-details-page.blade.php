@@ -29,38 +29,44 @@
             </div>
         </div>
     </section>
-    <section class="services-details">
+    <section class="blog-details">
         <div class="container">
             <div class="row">
-                <div class="col-xl-8 col-lg-8">
-                    <div class="services-details__content">
-                        <h3 class="mt-4">{{ $service->title }}</h3>
-                        <p>
-                            {!! $service->desc !!}
-                        </p>
+                <div class="col-xl-8 col-lg-7">
+                    <div class="blog-details__left">
+                        <div class="blog-details__img">
+                            <img src="{{asset('storage/'.$service->thumbnail)}}" alt="{{$service->title}}" />
+                        </div>
+                        <div class="blog-details__content">
+                            <p class="blog-details__text-2">
+                                {!! $service->content !!}
+                            </p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-xl-4 col-lg-4">
-                    <div class="service-sidebar">
-                        <div class="sidebar-widget service-sidebar-single">
-                            <div class="service-sidebar-single-contact-box text-center wow fadeInUp" data-wow-delay="0.3s"
-                                data-wow-duration="1200m" style="background-image: url(images/resource/news-2.jpg)">
-                                <div class="icon">
-                                    <span class="lnr lnr-icon-phone"></span>
-                                </div>
-                                <div class="title">
-                                    <h2>Best AC <br />Services</h2>
-                                </div>
-                                <p class="phone">
-                                    <a href="tel:{{ $systemInfo->phone }}">{{ $systemInfo->phone }}</a>
-                                </p>
-                                <p>Call Us Anytime</p>
-                            </div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="sidebar">
+                        <div class="sidebar__single sidebar__post">
+                            <h3 class="sidebar__title">Other Services</h3>
+                            <ul class="sidebar__post-list list-unstyled">
+                                @foreach ($otherServices as $otherService)
+                                <li>
+                                    <div class="sidebar__post-image" style="width: 70px; height:45px">
+                                        <img src="{{asset('storage/'.$otherService->thumbnail)}}" alt="{{$otherService->title}}" />
+                                    </div>
+                                    <div class="sidebar__post-content">
+                                        <h3>
+                                            <a href="{{route('service.details',['slug'=>$otherService->slug])}}" wire:navigate>{{$otherService->title}}</a>
+                                        </h3>
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <livewire:components.home.home-contact />
     </section>
 </div>

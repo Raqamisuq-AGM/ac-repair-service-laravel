@@ -7,6 +7,11 @@ use Livewire\Component;
 
 class About extends Component
 {
+    public function placeholder()
+    {
+        return view('components.other.about-skeleton');
+    }
+
     public function render()
     {
         $about = AboutUs::first();

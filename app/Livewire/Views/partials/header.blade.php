@@ -3,7 +3,7 @@
         <div class="main-box">
             <div class="logo-box">
                 <div class="logo" style="max-width: 165px;">
-                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt="" /></a>
+                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt="logo" /></a>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@
         <nav class="menu-box">
             <div class="upper-box">
                 <div class="nav-logo">
-                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt title /></a>
+                    <a href="{{route('index')}}" wire:navigate><img src="{{ asset('storage/'.$logo) }}" alt="logo" /></a>
                 </div>
                 <div class="close-btn"><i class="icon fa fa-times"></i></div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages\Other;
 
+use App\Models\Service;
 use Livewire\Component;
 use Stevebauman\Location\Facades\Location;
 use Jenssegers\Agent\Agent;
@@ -41,9 +42,14 @@ class AboutPage extends Component
         $userTraffic->save();
     }
 
+    public function placeholder()
+    {
+        return view('components.service.skeleton');
+    }
+
     public function render()
     {
-
-        return view('pages.other.about-page')->layout('partials.app-layout');
+        $services = Service::orderBy('id', 'desc')->get();
+        return view('pages.other.about-page', compact('services'))->layout('partials.app-layout');
     }
 }

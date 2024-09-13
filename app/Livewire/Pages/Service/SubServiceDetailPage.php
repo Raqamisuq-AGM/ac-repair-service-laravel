@@ -54,8 +54,9 @@ class SubServiceDetailPage extends Component
     public function render()
     {
         $parentService = Service::where('slug', $this->slug)->first();
+        $otherServices = Service::where('slug', '!=', $this->slug)->get();
         $service = SubService::where('slug', $this->subServiceSlug)->first();
         $systemInfo = SystemInfo::first();
-        return view('pages.service.sub-service-details-page', compact('service', 'systemInfo', 'parentService'))->layout('partials.app-layout');
+        return view('pages.service.sub-service-details-page', compact('service', 'systemInfo', 'parentService', 'otherServices'))->layout('partials.app-layout');
     }
 }
